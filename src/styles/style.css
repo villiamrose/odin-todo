@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Inter');
 
 :root {
-  --pane-padding: 20px;
+  --title-padding: 0px 0px 10px 0px;
+  --pane-padding: 10px;
 }
 
 * {
@@ -21,11 +22,51 @@ li {
   list-style: none;
 }
 
+.title {
+  padding: var(--title-padding);
+}
+
+.icon {
+  max-height: 100%;
+  margin-right: 5px;
+}
+
 .navigation {
   background-color: darkgray;
   padding: var(--pane-padding);
   width: 280px;
   flex-shrink: 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.navigation .separator {
+  border: none;
+  margin: 5px;
+  /* height: .1px; */
+  background-color: dimgray;
+}
+
+.navigation li {
+  background-color: darkgray;
+  height: 40px;
+  font-size: 1.2rem;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.navigation li:hover {
+  filter: brightness(95%);
+}
+
+.navigation li:active {
+  filter: brightness(97%);
+}
+
+.actions {
+  margin-top: auto;
 }
 
 .main {

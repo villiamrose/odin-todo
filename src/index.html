@@ -8,28 +8,46 @@
 </head>
 <body>
   <div class="navigation">
-    <div class="logo">
+    <div class="title">
       <h2>To-do list</h2>
     </div>
     <div class="lists">
       <div class="auto">
         <ul>
-          <li>Today</li>
-          <li>This week</li>
-          <li>Important</li>
-          <li>Tasks</li>
+          <li class="list">
+            <img src="./assets/today.svg" alt="today" class="icon">
+            Today
+          </li>
+          <li class="list">
+            <img src="./assets/important.svg" alt="important" class="icon">
+            Important
+          </li>
+          <li class="list">
+            <img src="./assets/task.svg" alt="task" class="icon">
+            Tasks
+          </li>
         </ul>
       </div>
+      <hr class="separator">
       <div class="user">
         <ul>
-          <li>Checklist</li>
-          <li>Payments</li>
+          <li class="list">
+            <img src="./assets/list.svg" alt="list" class="icon">
+            Checklist
+          </li>
+          <li class="list">
+            <img src="./assets/list.svg" alt="list" class="icon">
+            Payments
+          </li>
         </ul>
       </div>
     </div>
     <div class="actions">
       <ul>
-        <li>New list</li>
+        <li class="action">
+          <img src="./assets/add.svg" alt="add" class="icon">
+          New list
+        </li>
       </ul>
     </div>
   </div>
@@ -45,7 +63,7 @@
     </ul>
   </div>
   <div class="details">
-    <h2>Task 0</h2>
+    <h2 class="title">Task 0</h2>
     <label for="duedate">
       <p>Due date</p>
       <input type="date" name="duedate" id="duedate">

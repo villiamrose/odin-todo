@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+:root {
+  --pane-padding: 20px;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+.navigation {
+  background-color: darkgray;
+  padding: var(--pane-padding);
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.main {
+  background-color: beige;
+  padding: var(--pane-padding);
+  width: 100%;
+}
+
+.details {
+  background-color: lightpink;
+  padding: var(--pane-padding);
+  flex-shrink: 0;
+  width: 330px;
+}

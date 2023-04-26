@@ -3,6 +3,10 @@
 :root {
   --title-padding: 0px 0px 10px 0px;
   --pane-padding: 10px;
+  --navigation-color: darkgray;
+  --main-color: beige;
+  --task-list-color: white;
+  --icon-height: 24px;
 }
 
 * {
@@ -22,17 +26,25 @@ li {
   list-style: none;
 }
 
+li:hover {
+  filter: brightness(95%);
+}
+
+li:active {
+  filter: brightness(97%);
+}
+
 .title {
   padding: var(--title-padding);
 }
 
 .icon {
-  max-height: 100%;
+  max-height: var(--icon-height);
   margin-right: 5px;
 }
 
 .navigation {
-  background-color: darkgray;
+  background-color: var(--navigation-color);
   padding: var(--pane-padding);
   width: 280px;
   flex-shrink: 0;
@@ -43,12 +55,10 @@ li {
 .navigation .separator {
   border: none;
   margin: 5px;
-  /* height: .1px; */
-  background-color: dimgray;
 }
 
 .navigation li {
-  background-color: darkgray;
+  background-color: var(--navigation-color);
   height: 40px;
   font-size: 1.2rem;
   padding: 8px;
@@ -57,22 +67,36 @@ li {
   align-items: center;
 }
 
-.navigation li:hover {
-  filter: brightness(95%);
-}
-
-.navigation li:active {
-  filter: brightness(97%);
-}
-
 .actions {
   margin-top: auto;
 }
 
 .main {
-  background-color: beige;
+  background-color: var(--main-color);
   padding: var(--pane-padding);
   width: 100%;
+}
+
+.main .task-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+
+.main .task {
+  background-color: var(--task-list-color);
+  font-size: 1.2rem;
+  height: 50px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 0.5px solid lightgray;
+  border-radius: 10px;
+}
+
+.task img {
+  height: 24px;
 }
 
 .details {

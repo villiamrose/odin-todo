@@ -75,6 +75,8 @@ li:active {
   background-color: var(--main-color);
   padding: var(--pane-padding);
   width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .main .task-list {
@@ -87,12 +89,35 @@ li:active {
   background-color: var(--task-list-color);
   font-size: 1.2rem;
   height: 50px;
+  width: 100%;
   padding: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   border: 0.5px solid lightgray;
   border-radius: 10px;
+}
+
+.main .actions input {
+  cursor: text;
+  padding-left: 35px;
+}
+
+.main .actions input:hover {
+  border: 1px solid gray;
+}
+
+.main .actions .icon {
+  content: url('../assets/add.svg');
+  filter: invert(49%) sepia(0%) saturate(1%) hue-rotate(177deg) brightness(92%) contrast(85%);
+  position: relative;
+  top: 40px;
+  left: 8px;
+}
+
+.main .actions .icon:has(+ input:focus){
+  content: url('../assets/radio-button.svg');
+  filter: none;
 }
 
 .task img {

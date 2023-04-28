@@ -3,15 +3,18 @@
 :root {
   --title-padding: 0px 0px 10px 0px;
   --pane-padding: 10px;
-  --navigation-color: darkgray;
-  --main-color: beige;
-  --task-list-color: white;
+  --navigation-color: #FAFAFA;
+  --main-color: #5E72C1;
+  --main-title-color: #FDFDFD; 
+  --task-list-color: #FDFDFD;
   --icon-height: 24px;
-  --details-color: lightpink;
+  --details-color: #FAFAFA;
+  --text-color: #474749;
 }
 
 * {
   font-family: 'Inter', sans-serif;
+  color: var(--text-color);
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -80,6 +83,10 @@ li:active {
   flex-flow: column nowrap;
 }
 
+.main .title {
+  color: var(--main-title-color);
+}
+
 .main .task-list {
   display: flex;
   flex-flow: column nowrap;
@@ -106,6 +113,10 @@ li:active {
 
 .main .actions input:hover {
   border: 1px solid gray;
+}
+
+.main .actions input:focus {
+  outline: none;
 }
 
 .main .actions .icon {

@@ -91,14 +91,17 @@
       <h2 class="title">Task 0</h2>
       <img src="./assets/close.svg" alt="close" class="icon">
     </div>
-    <label for="duedate">
-      <p>Due date</p>
-      <input type="date" name="duedate" id="duedate">
-    </label>
-    <label for="notes">
+    <div class="row">
+      <label for="duedate">Due date</label>
+      <input id="duedate" type="datetime-local" name="duedate">
+    </div>
+    <label class="notes" for="notes">
       <p>Notes</p>
-      <textarea name="notes" id="notes" cols="30" rows="10"></textarea>
+      <textarea name="notes" id="notes" cols="30" rows="20"></textarea>
     </label>
+    <div class="updated">
+      <p>Updated on <span id="updated">April 29, 2023</span></p>
+    </div>
     <div class="actions">
       <div class="action">
         <img src="./assets/done.svg" alt="done">
@@ -112,6 +115,9 @@
         <img src="./assets/delete.svg" alt="delete">
         <p>Delete</p>
       </div>
+    </div>
+    <div class="created">
+      <p>Created on <span id="created">April 29, 2023</span></p>
     </div>
   </div>
 </body>

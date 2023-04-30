@@ -1,4 +1,5 @@
 import {v4 as Uuid} from 'uuid';
+import { ids } from 'webpack';
 
 const Task = (value) => {
   const uuid = Uuid();
@@ -28,29 +29,34 @@ const Task = (value) => {
 
   // setters
   const setName = (value) => {
-    name = value;
     setUpdated();
+    name = value;
+    return name;
   };
   const setIsDone = (value) => {
     if (typeof value === 'boolean') {
-      isDone = value;
       setUpdated();
+      isDone = value;
+      return isDone;
     }
   }
   const setIsImportant = (value )=> {
     if (typeof value === 'boolean') {
-      isImportant;
       setUpdated();
+      isImportant = value;
+      return isImportant;
     }
   }
   const setNotes = (value) => {
-    notes = value;
     setUpdated();
+    notes = value;
+    return notes;
   }
   const setDueDate = (value) => {
     if (value instanceof Date) {
-      dueDate = value;
       setUpdated();
+      dueDate = value;
+      return dueDate;
     }
   }
 

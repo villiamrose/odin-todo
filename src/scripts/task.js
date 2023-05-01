@@ -1,5 +1,4 @@
 import {v4 as Uuid} from 'uuid';
-import { ids } from 'webpack';
 
 const Task = (value) => {
   const uuid = Uuid();

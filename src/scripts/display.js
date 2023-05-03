@@ -1,15 +1,15 @@
 export { Display };
 
 const Display = (() => {
-  let isNotYetBuilt = true;
+  let isInitialized = false;
 
   const closeDetails = () => {
-    const detailsElement = document.querySelector('.details');
-    detailsElement.style.display = 'none';
+    const details = document.querySelector('.details');
+    details.style.display = 'none';
   }
   const openDetails = () => {
-    const detailsElement = document.querySelector('.details');
-    detailsElement.style.display = 'flex';
+    const details = document.querySelector('.details');
+    details.style.display = 'flex';
   }
   const selectTask = (task) => {
     const selectedTask = document.querySelector('.task.selected');
@@ -25,57 +25,77 @@ const Display = (() => {
     const isSelected = task.classList.contains('selected');
     return isSelected;
   }
-  const build = () => {
-    if (isNotYetBuilt) {
-      buildSidebar();
-
-      isNotYetBuilt = false;
+  const initialize = (eventHandler) => {
+    if (!isInitialized) {
+      isInitialized = true;
+      buildSidebar(eventHandler);
     }
   }
-  const buildSidebar = () => {
+  const buildSidebarAction = (label, options) => {
+    const icon = document.createElement('img');
+    icon.className = 'icon';
+    icon.src = require(`../assets/${options.icon}.svg`);
 
-    const titleElement = document.createElement('h2');
-    titleElement.className = 'title';
-    titleElement.textContent = 'To-do list';
+    const name = document.createElement('span');
+    name.textContent = label;
 
-    const listsElement = document.createElement('ul');
-    listsElement.className = 'lists';
+    const action = document.createElement('li');
+    action.className = 'action';
+    action.id = 'add-list';
+    action.addEventListener('click', options.eventHandler)
+    action.append(icon, name);
 
-    const actionsElement = document.createElement('ul');
-    actionsElement.className = 'actions';
+    return action;
 
+  }
+  const buildSidebar = (eventHandler) => {
+    const title = document.createElement('h2');
+    title.className = 'title';
+    title.textContent = 'To-do list';
+
+    const lists = document.createElement('ul');
+    lists.className = 'lists';
+
+    const newListActionOption = {
+      icon: 'add', 
+      eventHandler: eventHandler
+    };
+    const newListAction = buildSidebarAction('New list', newListActionOption);
     
-    const navigationElement = document.createElement('div');
-    navigationElement.className = 'navigation';
-    navigationElement.append(titleElement, listsElement, actionsElement);
+    const actions = document.createElement('ul');
+    actions.className = 'actions';
+    actions.append(newListAction);
+    
+    const navigation = document.createElement('div');
+    navigation.className = 'navigation';
+    navigation.append(title, lists, actions);
 
-    const bodyElement = document.querySelector('body');
-    bodyElement.prepend(navigationElement);
+    const body = document.querySelector('body');
+    body.prepend(navigation);
   }
   const addTaskList = (taskList, options) => {
-    const taskListElement = buildTaskListElement(taskList, options);
+    const taskListElmnt = buildTaskList(taskList, options);
 
-    const listsElement = document.querySelector('.navigation .lists');
-    listsElement.append(taskListElement);
+    const lists = document.querySelector('.navigation .lists');
+    lists.append(taskListElmnt);
   }
-  const buildTaskListElement = (taskList, options) => {
-    const iconElement = document.createElement('img');
-    iconElement.className = 'icon';
-    console.log(options.icon);
-    // iconElement.src = require(`./assets/${options.icon}.svg`);
+  const buildTaskList = (taskList, options) => {
+    const icon = document.createElement('img');
+    icon.className = 'icon';
+    icon.src = require(`../assets/${options.icon}.svg`);
 
-    const nameElement = document.createElement('span');
-    nameElement.textContent = taskList.getName();
+    const name = document.createElement('span');
+    name.textContent = taskList.getName();
 
-    const listElement = document.createElement('li');
-    listElement.className = 'list';
-    listElement.id = taskList.getUuid();
-    listElement.append(iconElement, nameElement);
+    const list = document.createElement('li');
+    list.className = 'list';
+    list.id = taskList.getUuid();
+    list.append(icon, name);
 
-    return listElement;
+    return list;
   }
   return {
-    build,
+    initialize,
     closeDetails,
     openDetails,
     selectTask,

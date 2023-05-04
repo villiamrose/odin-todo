@@ -71,6 +71,11 @@ li:active {
   align-items: center;
 }
 
+.navigation input {
+  font-size: 1.2rem;
+  width: 100%;
+}
+
 .actions {
   margin-top: auto;
 }

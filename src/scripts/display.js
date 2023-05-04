@@ -73,11 +73,16 @@ const Display = (() => {
     const body = document.querySelector('body');
     body.prepend(navigation);
   }
+  const focusTaskListInput = (taskList) => {
+    const input = taskList.querySelector('input');
+    input.focus();
+  }
   const addTaskList = (taskList, options) => {
     const taskListElmnt = buildTaskList(taskList, options);
-
     const lists = document.querySelector('.navigation .lists');
     lists.append(taskListElmnt);
+    focusTaskListInput(taskListElmnt);
+
   }
   const buildTaskList = (taskList, options) => {
     const icon = document.createElement('img');
@@ -87,13 +92,42 @@ const Display = (() => {
     const name = document.createElement('span');
     name.textContent = taskList.getName();
 
+    const nameInput = document.createElement('input');
+    nameInput.className = 'list';
+    nameInput.value = taskList.getName();
+    nameInput.style.display = 'none';
+    nameInput.addEventListener('focusout', options.eventHandler);
+
     const list = document.createElement('li');
     list.className = 'list';
     list.id = taskList.getUuid();
-    list.append(icon, name);
+    list.addEventListener('dblclick', options.eventHandler);
+    list.append(icon, name, nameInput);
 
     return list;
   }
+
+  const editTaskList = (taskList) => {
+    const taskLists = Array.from(document.querySelectorAll('.navigation .list'));
+    const taskListElmnt = taskLists.find(item => item.id === taskList.getUuid());
+    const label = taskListElmnt.querySelector('span');
+    const input = taskListElmnt.querySelector('input');
+    label.style.display = 'none';
+    input.style.display = 'inline-block';
+    input.focus();
+  }
+
+  const renameTaskList = (taskList) => {
+    const taskLists = Array.from(document.querySelectorAll('.navigation .list'));
+    const taskListElmnt = taskLists.find(item => item.id === taskList.getUuid());
+    const label = taskListElmnt.querySelector('span');
+    const input = taskListElmnt.querySelector('input');
+    label.textContent = taskList.getName();
+    input.value = taskList.getName();
+    label.style.display = 'inline';
+    input.style.display = 'none';
+  }
+
   return {
     initialize,
     closeDetails,
@@ -101,6 +135,8 @@ const Display = (() => {
     selectTask,
     deselectTask,
     isTaskSelected,
-    addTaskList
+    addTaskList,
+    editTaskList,
+    renameTaskList
   }
 })();

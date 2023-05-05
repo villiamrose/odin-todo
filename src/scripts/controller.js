@@ -27,6 +27,10 @@ const Controller = (() => {
       TaskList('Reminders')
     ]
 
+    list[0].addTask(Task('Task 1'));
+    list[0].addTask(Task('Task 2'));
+    list[2].addTask(Task('Task 3'));
+
     userTaskLists = list;
 
     return list;

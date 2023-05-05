@@ -92,16 +92,24 @@ const Controller = (() => {
     }
   }
 
+  const selectTaskListHandler = (event) => {
+    const target = event.currentTarget;
+    Display.selectTaskList(target);
+  }
+
   const clickEventHandler = (event) => {
     const target = event.currentTarget;
     if (target.id === 'add-list') {
       newTaskListHandler(event);
+    } else if (target.className === 'list') {
+      selectTaskListHandler(event);
     }
   }
 
   const dblClickEventHandler = (event) => {
     const target = event.currentTarget;
-    if(target.className === 'list') {
+    console.log(target.className);
+    if(target.classList.contains('list')) {
       editTaskListHandler(event);
     }
   }
@@ -123,10 +131,11 @@ const Controller = (() => {
 
   const eventHandler = (event) => {
     const eventType = event.type;
-    if (eventType === 'click') {
-      clickEventHandler(event);
-    } else if (eventType === 'dblclick') {
+    console.log(eventType);
+    if (eventType === 'dblclick') {
       dblClickEventHandler(event);
+    } else if (eventType === 'click') {
+      clickEventHandler(event);
     } else if (eventType === 'focusout') {
       focusOutEventHandler(event);
     } else if (eventType === 'keypress') {

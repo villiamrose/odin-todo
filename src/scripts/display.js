@@ -81,8 +81,10 @@ const Display = (() => {
     const taskListElmnt = buildTaskList(taskList, options);
     const lists = document.querySelector('.navigation .lists');
     lists.append(taskListElmnt);
+    if (options.editable) {
+      selectTaskList(taskListElmnt);
+    }
     focusTaskListInput(taskListElmnt);
-
   }
   const buildTaskList = (taskList, options) => {
     const icon = document.createElement('img');
@@ -111,6 +113,7 @@ const Display = (() => {
     list.className = 'list';
     list.id = taskList.getUuid();
     list.addEventListener('dblclick', options.eventHandler);
+    list.addEventListener('click', options.eventHandler);
     list.append(icon, name, nameInput);
 
     return list;
@@ -137,6 +140,14 @@ const Display = (() => {
     input.style.display = 'none';
   }
 
+  const selectTaskList = (taskList) => {
+    const selected = document.querySelector('.navigation .selected');
+    if (selected) {
+      selected.classList.remove('selected');
+    }
+    taskList.classList.add('selected');
+  }
+
   return {
     initialize,
     closeDetails,
@@ -146,6 +157,7 @@ const Display = (() => {
     isTaskSelected,
     addTaskList,
     editTaskList,
-    renameTaskList
+    renameTaskList,
+    selectTaskList
   }
 })();

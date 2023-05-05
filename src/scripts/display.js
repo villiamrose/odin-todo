@@ -97,6 +97,7 @@ const Display = (() => {
     nameInput.value = taskList.getName();
     nameInput.style.display = 'none';
     nameInput.addEventListener('focusout', options.eventHandler);
+    nameInput.addEventListener('keypress', options.eventHandler);
 
     const list = document.createElement('li');
     list.className = 'list';

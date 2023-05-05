@@ -107,6 +107,14 @@ const Controller = (() => {
     }
   }
 
+  const keypressEventHandler = (event) => {
+    const target = event.currentTarget;
+    const key = event.key;
+    if(target.className === 'list' && key === 'Enter') {
+      renameTaskListHandler(event);
+    }
+  }
+
   const eventHandler = (event) => {
     const eventType = event.type;
     if (eventType === 'click') {
@@ -115,6 +123,8 @@ const Controller = (() => {
       dblClickEventHandler(event);
     } else if (eventType === 'focusout') {
       focusOutEventHandler(event);
+    } else if (eventType === 'keypress') {
+      keypressEventHandler(event);
     }
   }
 

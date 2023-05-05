@@ -95,9 +95,17 @@ const Display = (() => {
     const nameInput = document.createElement('input');
     nameInput.className = 'list';
     nameInput.value = taskList.getName();
-    nameInput.style.display = 'none';
+    nameInput.placeholder = 'Untitled list';
     nameInput.addEventListener('focusout', options.eventHandler);
     nameInput.addEventListener('keypress', options.eventHandler);
+
+    if(options.editable) {
+      nameInput.style.display = 'span';
+      name.style.display = 'none';
+    } else {
+      nameInput.style.display = 'none';
+      name.style.display = 'inline-block';
+    }
 
     const list = document.createElement('li');
     list.className = 'list';

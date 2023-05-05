@@ -54,11 +54,12 @@ const Controller = (() => {
   }
 
   const newTaskListHandler = (event) => {
-    const newTaskList = TaskList('Untitled list');
+    const newTaskList = TaskList('');
 
     userTaskLists.push(newTaskList);
     const options = {
       icon: 'list',
+      editable: true,
       eventHandler: eventHandler
     }
     Display.addTaskList(newTaskList, options);
@@ -78,8 +79,9 @@ const Controller = (() => {
     const targetUuid = target.parentNode.id;
     const index = userTaskLists.findIndex(item => item.getUuid() === targetUuid);
     const taskList = userTaskLists[index];
+    const name = target.value ? target.value : 'Untitled list';
     if (taskList) {
-      taskList.setName(target.value);
+      taskList.setName(name);
       userTaskLists[index] = taskList;
       Display.renameTaskList(taskList);
       userTaskLists.forEach(item => console.log(item.getName()));

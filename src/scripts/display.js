@@ -183,7 +183,28 @@ const Display = (() => {
 
   }
 
-  const showTaskListDetails = (taskList) => {
+  const buildTaskListAction = () => {
+    const icon = document.createElement('img');
+    icon.className = 'icon';
+
+    const input = document.createElement('input');
+    input.className = 'task';
+    input.type = 'text';
+    input.placeholder = 'Add a task';
+
+    const action = document.createElement('div');
+    action.className = 'action';
+    action.append(icon, input);
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.append(action);
+
+    const main = document.querySelector('.main');
+    main.append(actions);
+  }
+
+  const showTaskListDetails = (taskList, options) => {
     const current = document.querySelector('.main');
     const details = document.querySelector('.details');
     if (current) current.remove();
@@ -192,6 +213,10 @@ const Display = (() => {
     buildTaskListDetails(taskList);
 
     taskList.getTasks().forEach(task => buildTask(task));
+
+    if (options.showAction) {
+      buildTaskListAction();
+    }
   }
 
   return {

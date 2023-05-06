@@ -102,8 +102,18 @@ const Controller = (() => {
     const target = event.currentTarget;
     const taskList = getTaskListByUuid(target.id);
     Display.selectTaskList(taskList);
-    Display.showTaskListDetails(taskList);
-    console.log(taskList.getName());
+
+    let isUserTaskList = false;
+    userTaskLists.forEach(item => {
+      if (target.id === item.getUuid()) {
+        isUserTaskList = true;
+      }
+    }
+    );
+    const options = {
+      showAction: isUserTaskList
+    };
+    Display.showTaskListDetails(taskList, options);
   }
 
   const clickEventHandler = (event) => {

@@ -142,10 +142,56 @@ const Display = (() => {
 
   const selectTaskList = (taskList) => {
     const selected = document.querySelector('.navigation .selected');
-    if (selected) {
-      selected.classList.remove('selected');
-    }
-    taskList.classList.add('selected');
+    if (selected) selected.classList.remove('selected');
+    const taskListElements = Array.from(document.querySelectorAll('.lists .list'));
+    const element = taskListElements.find(item => item.id === taskList.getUuid());
+    element.classList.add('selected');
+  }
+
+  const buildTaskListDetails = (taskList) => {
+
+    const title = document.createElement('h2');
+    title.className = 'title';
+    title.textContent = taskList.getName();
+
+    const taskListElmnt = document.createElement('ul');
+    taskListElmnt.className = 'task-list';
+
+    const main = document.createElement('div');
+    main.className = 'main';
+    main.append(title, taskListElmnt);
+
+    const body = document.querySelector('body');
+    body.append(main);
+  }
+
+  const buildTask = (task) => {  
+    const icon = document.createElement('img');
+    icon.className = 'icon';
+    icon.src = require(`../assets/radio-button.svg`);
+
+    const label = document.createElement('span');
+    label.textContent = task.getName();
+
+      
+    const taskElmnt = document.createElement('li');
+    taskElmnt.className = 'task';
+    taskElmnt.append(icon, label);
+
+    const taskList = document.querySelector('.main .task-list');
+    taskList.append(taskElmnt);
+
+  }
+
+  const showTaskListDetails = (taskList) => {
+    const current = document.querySelector('.main');
+    const details = document.querySelector('.details');
+    if (current) current.remove();
+    if (details) details.remove();
+
+    buildTaskListDetails(taskList);
+
+    taskList.getTasks().forEach(task => buildTask(task));
   }
 
   return {
@@ -158,6 +204,7 @@ const Display = (() => {
     addTaskList,
     editTaskList,
     renameTaskList,
-    selectTaskList
+    selectTaskList,
+    showTaskListDetails
   }
 })();

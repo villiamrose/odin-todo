@@ -57,6 +57,12 @@ const Controller = (() => {
     });
   }
 
+  const getTaskListByUuid = (uuid) => {
+    const taskLists = [].concat(autoTaskLists, userTaskLists);
+    const taskList = taskLists.find(item => item.getUuid() === uuid);
+    return taskList
+  }
+
   const newTaskListHandler = (event) => {
     const newTaskList = TaskList('');
 
@@ -94,7 +100,10 @@ const Controller = (() => {
 
   const selectTaskListHandler = (event) => {
     const target = event.currentTarget;
-    Display.selectTaskList(target);
+    const taskList = getTaskListByUuid(target.id);
+    Display.selectTaskList(taskList);
+    Display.showTaskListDetails(taskList);
+    console.log(taskList.getName());
   }
 
   const clickEventHandler = (event) => {

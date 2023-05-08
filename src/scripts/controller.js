@@ -109,14 +109,10 @@ const Controller = (() => {
     }
   }
 
-  const selectTaskListHandler = (event) => {
-    const target = event.currentTarget;
-    const taskList = getTaskListByUuid(target.id);
-    Display.selectTaskList(taskList);
-
+  const showTaskListDetails = (taskList) => {
     let isUserTaskList = false;
     userTaskLists.forEach(item => {
-      if (target.id === item.getUuid()) {
+      if (item.getUuid() === taskList.getUuid()) {
         isUserTaskList = true;
       }
     });
@@ -125,6 +121,13 @@ const Controller = (() => {
       addTaskHandler: addTaskHandler
     };
     Display.showTaskListDetails(taskList, options);
+  }
+
+  const selectTaskListHandler = (event) => {
+    const target = event.currentTarget;
+    const taskList = getTaskListByUuid(target.id);
+    Display.selectTaskList(taskList);
+    showTaskListDetails(taskList);
   }
 
   const editTaskHandler = (event) => {
@@ -141,20 +144,15 @@ const Controller = (() => {
 
   const addTaskHandler = (event) => {
     const target = event.currentTarget;
-
-    if (target.value) {
+    const key = event.key;
+    if(key === 'Enter' && target.value) {
       const task = Task(target.value);
       const taskListUuid = Display.getSelectedTaskList().id;
       const index = userTaskLists.findIndex(item => item.getUuid() === taskListUuid);
       const taskList = userTaskLists[index];
       taskList.addTask(task);
       userTaskLists[index] = taskList;
-      const options = {
-        showAction: true,
-        addTaskListHandler: addTaskListHandler
-      };
-      Display.showTaskListDetails(taskList, options);
-
+      showTaskListDetails(taskList);
     }
   }
 

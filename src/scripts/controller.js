@@ -42,7 +42,9 @@ const Controller = (() => {
       const icon = taskList.getName().toLowerCase();
       const options = {
         icon: icon, 
-        eventHandler: eventHandler
+        selectHandler: selectTaskListHandler,
+        editHandler: editTaskListHandler,
+        saveHandler: saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -51,7 +53,9 @@ const Controller = (() => {
     userTaskLists.forEach(taskList => {
       const options = {
         icon: 'list', 
-        eventHandler: eventHandler
+        selectHandler: selectTaskListHandler,
+        editHandler: editTaskListHandler,
+        saveHandler: saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -63,14 +67,16 @@ const Controller = (() => {
     return taskList
   }
 
-  const newTaskListHandler = (event) => {
+  const addTaskListHandler = (event) => {
     const newTaskList = TaskList('');
 
     userTaskLists.push(newTaskList);
     const options = {
       icon: 'list',
-      editable: true,
-      eventHandler: eventHandler
+      editable: true, 
+      selectHandler: selectTaskListHandler,
+      editHandler: editTaskListHandler,
+      saveHandler: saveTaskListHandler
     }
     Display.addTaskList(newTaskList, options);
   }
@@ -84,17 +90,22 @@ const Controller = (() => {
     }
   }
 
-  const renameTaskListHandler = (event) => {
-    const target = event.currentTarget;
-    const targetUuid = target.parentNode.id;
-    const index = userTaskLists.findIndex(item => item.getUuid() === targetUuid);
-    const taskList = userTaskLists[index];
-    const name = target.value ? target.value : 'Untitled list';
-    if (taskList) {
+  const saveTaskListHandler = (event) => {
+    const key = event.key;
+    if(key === 'Enter' || event.type === 'focusout') {
+      const target = event.currentTarget;
+      const targetUuid = target.parentNode.id;
+      const index = userTaskLists.findIndex(item => item.getUuid() === targetUuid);
+      const taskList = userTaskLists[index];
+      const name = target.value ? target.value : 'Untitled list';
       taskList.setName(name);
       userTaskLists[index] = taskList;
       Display.renameTaskList(taskList);
-      userTaskLists.forEach(item => console.log(item.getName()));
+      const options = {
+        showAction: true,
+        addTaskHandler: addTaskHandler
+      };
+      Display.showTaskListDetails(taskList, options);
     }
   }
 
@@ -108,64 +119,52 @@ const Controller = (() => {
       if (target.id === item.getUuid()) {
         isUserTaskList = true;
       }
-    }
-    );
+    });
     const options = {
-      showAction: isUserTaskList
+      showAction: isUserTaskList,
+      addTaskHandler: addTaskHandler
     };
     Display.showTaskListDetails(taskList, options);
   }
 
-  const clickEventHandler = (event) => {
-    const target = event.currentTarget;
-    if (target.id === 'add-list') {
-      newTaskListHandler(event);
-    } else if (target.className === 'list') {
-      selectTaskListHandler(event);
-    }
+  const editTaskHandler = (event) => {
+    const target = event.currentTarget.parentNode;
+    console.log(event);
+    console.log(target);
+    // const taskListUuid = Display.getSelectedTaskList().id;
+    // const taskList = userTaskLists.find(item => item.getUuid() === taskListUuid);
+    // const taskUuid = target.id;
+    // const task = taskList.getTaskByUuid(taskUuid);
+    // console.log('yow');
+    // Display.editTask(task);
   }
 
-  const dblClickEventHandler = (event) => {
+  const addTaskHandler = (event) => {
     const target = event.currentTarget;
-    console.log(target.className);
-    if(target.classList.contains('list')) {
-      editTaskListHandler(event);
-    }
-  }
 
-  const focusOutEventHandler = (event) => {
-    const target = event.currentTarget;
-    if(target.className === 'list') {
-      renameTaskListHandler(event);
-    }
-  }
+    if (target.value) {
+      const task = Task(target.value);
+      const taskListUuid = Display.getSelectedTaskList().id;
+      const index = userTaskLists.findIndex(item => item.getUuid() === taskListUuid);
+      const taskList = userTaskLists[index];
+      taskList.addTask(task);
+      userTaskLists[index] = taskList;
+      const options = {
+        showAction: true,
+        addTaskListHandler: addTaskListHandler
+      };
+      Display.showTaskListDetails(taskList, options);
 
-  const keypressEventHandler = (event) => {
-    const target = event.currentTarget;
-    const key = event.key;
-    if(target.className === 'list' && key === 'Enter') {
-      renameTaskListHandler(event);
-    }
-  }
-
-  const eventHandler = (event) => {
-    const eventType = event.type;
-    console.log(eventType);
-    if (eventType === 'dblclick') {
-      dblClickEventHandler(event);
-    } else if (eventType === 'click') {
-      clickEventHandler(event);
-    } else if (eventType === 'focusout') {
-      focusOutEventHandler(event);
-    } else if (eventType === 'keypress') {
-      keypressEventHandler(event);
     }
   }
 
   // public functions 
   const initialize = () => {
-    Display.initialize(eventHandler);
-    loadTaskLists(eventHandler);
+    const options = {
+      addTaskListHandler: addTaskListHandler
+    }
+    Display.initialize(options);
+    loadTaskLists();
   }
 
   return {

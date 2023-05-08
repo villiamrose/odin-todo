@@ -23,6 +23,9 @@ const TaskList = (value) => {
   const getCreated = () => created;
   const getUpdated = () => updated;
   const getTasks = () => tasks;
+  const getTaskByUuid = (uuid) => {
+    return tasks.find(task => task.getUuid() === uuid);
+  }
 
   // setters
   const setName = (value) => {
@@ -56,6 +59,7 @@ const TaskList = (value) => {
     getCreated,
     getUpdated,
     getTasks,
+    getTaskByUuid,
     setName,
     addTask,
     deleteTask

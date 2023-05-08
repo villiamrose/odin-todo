@@ -126,6 +126,14 @@ li:active {
   outline: none;
 }
 
+.main .task-list input {
+  padding: 1px 1.5px;
+  height: 125%;
+  cursor: text;
+  margin: 2px;
+  border-radius: 0px;
+}
+
 .main .actions .icon {
   content: url('../assets/add.svg');
   filter: invert(49%) sepia(0%) saturate(1%) hue-rotate(177deg) brightness(92%) contrast(85%);

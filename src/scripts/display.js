@@ -25,16 +25,16 @@ const Display = (() => {
     const isSelected = task.classList.contains('selected');
     return isSelected;
   }
-  const initialize = (eventHandler) => {
+  const initialize = (options) => {
     if (!isInitialized) {
       isInitialized = true;
-      buildSidebar(eventHandler);
+      buildSidebar(options);
     }
   }
   const buildSidebarAction = (label, options) => {
     const icon = document.createElement('img');
     icon.className = 'icon';
-    icon.src = require(`../assets/${options.icon}.svg`);
+    icon.src = require(`../assets/add.svg`);
 
     const name = document.createElement('span');
     name.textContent = label;
@@ -42,13 +42,13 @@ const Display = (() => {
     const action = document.createElement('li');
     action.className = 'action';
     action.id = 'add-list';
-    action.addEventListener('click', options.eventHandler)
+    action.addEventListener('click', options.addTaskListHandler)
     action.append(icon, name);
 
     return action;
 
   }
-  const buildSidebar = (eventHandler) => {
+  const buildSidebar = (options) => {
     const title = document.createElement('h2');
     title.className = 'title';
     title.textContent = 'To-do list';
@@ -56,12 +56,8 @@ const Display = (() => {
     const lists = document.createElement('ul');
     lists.className = 'lists';
 
-    const newListActionOption = {
-      icon: 'add', 
-      eventHandler: eventHandler
-    };
-    const newListAction = buildSidebarAction('New list', newListActionOption);
-    
+    const newListAction = buildSidebarAction('New list', options);
+
     const actions = document.createElement('ul');
     actions.className = 'actions';
     actions.append(newListAction);
@@ -82,7 +78,7 @@ const Display = (() => {
     const lists = document.querySelector('.navigation .lists');
     lists.append(taskListElmnt);
     if (options.editable) {
-      selectTaskList(taskListElmnt);
+      selectTaskList(taskList);
     }
     focusTaskListInput(taskListElmnt);
   }
@@ -98,8 +94,8 @@ const Display = (() => {
     nameInput.className = 'list';
     nameInput.value = taskList.getName();
     nameInput.placeholder = 'Untitled list';
-    nameInput.addEventListener('focusout', options.eventHandler);
-    nameInput.addEventListener('keypress', options.eventHandler);
+    nameInput.addEventListener('focusout', options.saveHandler);
+    nameInput.addEventListener('keypress', options.saveHandler);
 
     if(options.editable) {
       nameInput.style.display = 'span';
@@ -112,8 +108,8 @@ const Display = (() => {
     const list = document.createElement('li');
     list.className = 'list';
     list.id = taskList.getUuid();
-    list.addEventListener('dblclick', options.eventHandler);
-    list.addEventListener('click', options.eventHandler);
+    list.addEventListener('dblclick', options.editHandler);
+    list.addEventListener('click', options.selectHandler);
     list.append(icon, name, nameInput);
 
     return list;
@@ -165,32 +161,42 @@ const Display = (() => {
     body.append(main);
   }
 
-  const buildTask = (task) => {  
+  const buildTask = (task, options) => {  
     const icon = document.createElement('img');
     icon.className = 'icon';
     icon.src = require(`../assets/radio-button.svg`);
 
     const label = document.createElement('span');
     label.textContent = task.getName();
+    label.style.display = 'inline-block';
+    label.addEventListener('dblclick', options.eventHandler);
 
+    const input = document.createElement('input');
+    input.className = 'task';
+    input.type = 'text';
+    input.value = task.getName();
+    input.style.display = 'none';
+    input.addEventListener('keypress', options.eventHandler);
       
     const taskElmnt = document.createElement('li');
     taskElmnt.className = 'task';
-    taskElmnt.append(icon, label);
+    taskElmnt.id = task.getUuid();
+    taskElmnt.append(icon, label, input);
 
     const taskList = document.querySelector('.main .task-list');
     taskList.append(taskElmnt);
 
   }
 
-  const buildTaskListAction = () => {
+  const buildTaskListAction = (options) => {
     const icon = document.createElement('img');
     icon.className = 'icon';
 
     const input = document.createElement('input');
-    input.className = 'task';
+    input.className = 'add task';
     input.type = 'text';
     input.placeholder = 'Add a task';
+    input.addEventListener('keypress', options.addTaskHandler);
 
     const action = document.createElement('div');
     action.className = 'action';
@@ -212,11 +218,26 @@ const Display = (() => {
 
     buildTaskListDetails(taskList);
 
-    taskList.getTasks().forEach(task => buildTask(task));
+    taskList.getTasks().forEach(task => buildTask(task, options));
 
     if (options.showAction) {
-      buildTaskListAction();
+      buildTaskListAction(options);
     }
+  }
+
+  const getSelectedTaskList = () => {
+    return document.querySelector('.list.selected');
+  }
+
+  const editTask = (task) => {
+    const tasks = Array.from(document.querySelectorAll('.main .task'));
+    const taskElmnt = tasks.find(item => item.id === task.getUuid());
+    const label = taskElmnt.querySelector('span');
+    const input = taskElmnt.querySelector('input');
+    console.log('hello');
+    label.style.display = 'none';
+    input.style.display = 'inline-block';
+    input.focus();
   }
 
   return {
@@ -230,6 +251,8 @@ const Display = (() => {
     editTaskList,
     renameTaskList,
     selectTaskList,
-    showTaskListDetails
+    showTaskListDetails,
+    getSelectedTaskList,
+    editTask
   }
 })();

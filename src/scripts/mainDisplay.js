@@ -1,6 +1,6 @@
-export { DisplayMain };
+export { MainDisplay };
 
-const DisplayMain = (() => {
+const MainDisplay = (() => {
   // private functions
   const buildMain = (taskList) => {
     const title = document.createElement('h2');

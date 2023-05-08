@@ -1,5 +1,5 @@
-import { DisplaySidebar } from './displaySidebar.js';
-import { DisplayMain } from './displayMain.js';
+import { DisplaySidebar } from './sidebarDisplay.js';
+import { MainDisplay } from './mainDisplay.js';
 
 export { Display };
 
@@ -26,11 +26,11 @@ const Display = (() => {
     closeDetails: closeDetails,
     openDetails: openDetails,
 
-    showTaskList: DisplayMain.showTaskList,
-    editTask: DisplayMain.editTask,
-    selectTask: DisplayMain.selectTask,
-    deselectTask: DisplayMain.deselectTask,
-    isTaskSelected: DisplayMain.isTaskSelected,    
+    showTaskList: MainDisplay.showTaskList,
+    editTask: MainDisplay.editTask,
+    selectTask: MainDisplay.selectTask,
+    deselectTask: MainDisplay.deselectTask,
+    isTaskSelected: MainDisplay.isTaskSelected,    
 
     addTaskList: DisplaySidebar.addTaskList,
     editTaskList: DisplaySidebar.editTaskList,

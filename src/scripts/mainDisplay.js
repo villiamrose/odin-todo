@@ -29,7 +29,7 @@ const MainDisplay = (() => {
     const label = document.createElement('span');
     label.textContent = task.getName();
     label.style.display = 'inline-block';
-    label.addEventListener('dblclick', options.eventHandler);
+    label.addEventListener('dblclick', options.editTaskHandler);
 
     const input = document.createElement('input');
     input.className = 'task';

@@ -1,9 +1,13 @@
 import { TaskList } from "./tasklist.js";
 import { Task } from './task.js';
 import { Display } from "./display.js";
+import { SidebarController } from "./sidebarController.js";
+
+export { Controller }
 
 const Controller = (() => {
   // private variables
+  let selectedTaskList = null;
   let autoTaskLists = [];
   let userTaskLists = [];
 
@@ -36,15 +40,15 @@ const Controller = (() => {
     return list;
   }
 
-  const loadTaskLists = () => {
+  const initializeTaskLists = () => {
     const autoTaskLists = loadAutoTaskLists();
     autoTaskLists.forEach(taskList => {
       const icon = taskList.getName().toLowerCase();
       const options = {
         icon: icon, 
-        selectHandler: selectTaskListHandler,
-        editHandler: editTaskListHandler,
-        saveHandler: saveTaskListHandler
+        selectHandler: SidebarController.selectTaskListHandler,
+        editHandler: SidebarController.editTaskListHandler,
+        saveHandler: SidebarController.saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -53,9 +57,9 @@ const Controller = (() => {
     userTaskLists.forEach(taskList => {
       const options = {
         icon: 'list', 
-        selectHandler: selectTaskListHandler,
-        editHandler: editTaskListHandler,
-        saveHandler: saveTaskListHandler
+        selectHandler: SidebarController.selectTaskListHandler,
+        editHandler: SidebarController.editTaskListHandler,
+        saveHandler: SidebarController.saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -67,46 +71,16 @@ const Controller = (() => {
     return taskList
   }
 
-  const addTaskListHandler = (event) => {
-    const newTaskList = TaskList('');
+  const isUserTaskList = (taskList) => {
+    let isUserTaskList = false;
+    
+    userTaskLists.forEach(item => {
+      if (item.getUuid() === taskList.getUuid()) {
+        isUserTaskList = true;
+      }
+    });
 
-    userTaskLists.push(newTaskList);
-    const options = {
-      icon: 'list',
-      editable: true, 
-      selectHandler: selectTaskListHandler,
-      editHandler: editTaskListHandler,
-      saveHandler: saveTaskListHandler
-    }
-    Display.addTaskList(newTaskList, options);
-  }
-
-  const editTaskListHandler = (event) => {
-    const target = event.currentTarget;
-    const targetUuid = target.id;
-    const taskList = userTaskLists.find(item => item.getUuid() === targetUuid);
-    if (taskList) {
-      Display.editTaskList(taskList);
-    }
-  }
-
-  const saveTaskListHandler = (event) => {
-    const key = event.key;
-    if(key === 'Enter' || event.type === 'focusout') {
-      const target = event.currentTarget;
-      const targetUuid = target.parentNode.id;
-      const index = userTaskLists.findIndex(item => item.getUuid() === targetUuid);
-      const taskList = userTaskLists[index];
-      const name = target.value ? target.value : 'Untitled list';
-      taskList.setName(name);
-      userTaskLists[index] = taskList;
-      Display.renameTaskList(taskList);
-      const options = {
-        showAction: true,
-        addTaskHandler: addTaskHandler
-      };
-      Display.showTaskList(taskList, options);
-    }
+    return isUserTaskList;
   }
 
   const showTaskList = (taskList) => {
@@ -121,25 +95,6 @@ const Controller = (() => {
       addTaskHandler: addTaskHandler
     };
     Display.showTaskList(taskList, options);
-  }
-
-  const selectTaskListHandler = (event) => {
-    const target = event.currentTarget;
-    const taskList = getTaskListByUuid(target.id);
-    Display.selectTaskList(taskList);
-    showTaskList(taskList);
-  }
-
-  const editTaskHandler = (event) => {
-    const target = event.currentTarget.parentNode;
-    console.log(event);
-    console.log(target);
-    // const taskListUuid = Display.getSelectedTaskList().id;
-    // const taskList = userTaskLists.find(item => item.getUuid() === taskListUuid);
-    // const taskUuid = target.id;
-    // const task = taskList.getTaskByUuid(taskUuid);
-    // console.log('yow');
-    // Display.editTask(task);
   }
 
   const addTaskHandler = (event) => {
@@ -157,17 +112,43 @@ const Controller = (() => {
   }
 
   // public functions 
+  const getUserTaskLists = () => userTaskLists;
+  const getSelectedTaskList = () => selectedTaskList;
+
+  const setSelectedTaskList = (taskList) => {
+    selectedTaskList = taskList;
+  }
+
+  const saveTaskList = (taskList) => {
+    const userIdx = userTaskLists.findIndex(item => item.getUuid() === taskList.getUuid());
+    const autoIdx = autoTaskLists.findIndex(item => item.getUuid() === taskList.getUuid());
+    if (userIdx) {
+      userTaskLists[userIdx] = taskList;
+    } else if (autoIdx) {
+      autoTaskLists[autoIdx] = taskList;
+    }
+  }
+
   const initialize = () => {
     const options = {
-      addTaskListHandler: addTaskListHandler
-    }
+      addTaskListHandler: SidebarController.addTaskListHandler
+    };
     Display.initialize(options);
-    loadTaskLists();
+    
+    initializeTaskLists();
+
+    const state = {
+      isUserTaskList,
+      getTaskListByUuid,
+      saveTaskList,
+      setSelectedTaskList,
+      getSelectedTaskList,
+      getUserTaskLists
+    };
+    SidebarController.initialize(state);
   }
 
   return {
     initialize
   }
 })();
-
-export { Controller }

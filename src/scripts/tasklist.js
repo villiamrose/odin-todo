@@ -15,6 +15,12 @@ const TaskList = (value) => {
   const isTaskUuidEqual = (task1, task2) => {
     return task1.getUuid() === task2.getUuid();
   }
+  const getTaskIndex = (task) => {
+    let index = tasks.findIndex(
+      item => isTaskUuidEqual(item, task)
+    );
+    return index;
+  }
 
   // public functions
   // getters
@@ -40,9 +46,7 @@ const TaskList = (value) => {
     return tasks;
   }
   const deleteTask = (value) => {
-    let index = tasks.findIndex(
-      item => isTaskUuidEqual(item, value)
-    );
+    let index = getTaskIndex(value);
     if (index >= 0) {
       setUpdated();
       tasks.splice(index, 1);

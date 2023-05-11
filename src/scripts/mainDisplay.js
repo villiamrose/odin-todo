@@ -36,7 +36,8 @@ const MainDisplay = (() => {
     input.type = 'text';
     input.value = task.getName();
     input.style.display = 'none';
-    input.addEventListener('keypress', options.eventHandler);
+    input.addEventListener('keypress', options.saveTaskHandler);
+    input.addEventListener('focusout', options.saveTaskHandler);
       
     const taskNode = document.createElement('li');
     taskNode.className = 'task';
@@ -111,9 +112,23 @@ const MainDisplay = (() => {
     input.focus();
   }
 
+  const renameTask = (task) => {
+    const taskNodes = Array.from(document.querySelectorAll('.main .task'));
+    const taskNode = taskNodes.find(item => item.id === task.getUuid());
+
+    const input = taskNode.querySelector('input');
+    input.value = task.getName();
+    input.style.display = 'none';
+
+    const label = taskNode.querySelector('span');
+    label.textContent = task.getName();
+    label.style.display = 'inline';
+  }
+
   return {
     showTaskList,
     editTask,
+    renameTask,
     selectTask,
     deselectTask,
     isTaskSelected

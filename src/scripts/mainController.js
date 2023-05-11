@@ -14,9 +14,9 @@ const MainController = (() => {
     const key = event.key;
 
     if(key === 'Enter' && target.value) {
+      const taskList = controller.getSelectedTaskList();
       const task = Task(target.value);
       
-      const taskList = controller.getSelectedTaskList();
       taskList.addTask(task);
       
       controller.saveTaskList(taskList);
@@ -24,17 +24,30 @@ const MainController = (() => {
     }
   }
 
-  const editTaskHandler = (event, msg) => {
+  const editTaskHandler = (event) => {
     const target = event.currentTarget.parentNode;
-    console.log(event);
-    console.log(target);
-    console.log(msg);
-    // const taskListUuid = Display.getSelectedTaskList().id;
-    // const taskList = userTaskLists.find(item => item.getUuid() === taskListUuid);
-    // const taskUuid = target.id;
-    // const task = taskList.getTaskByUuid(taskUuid);
-    // console.log('yow');
-    // Display.editTask(task);
+    const selectedTaskList = controller.getSelectedTaskList();
+    const task = selectedTaskList.getTaskByUuid(target.id);
+
+    Display.editTask(task);
+  }
+
+  const saveTaskHandler = (event) => {
+    const targetDisplay = event.target.style.display;
+    if(event.key === 'Enter' || (event.type === 'focusout' && targetDisplay !== 'none')) {
+      const target = event.currentTarget;
+      const taskListUuid = target.parentNode.id;
+      const selectedTaskList = controller.getSelectedTaskList();
+      const task = selectedTaskList.getTaskByUuid(taskListUuid);
+      
+      const name = target.value ? target.value : 'Untitled task';
+      task.setName(name);
+      
+      const taskList = controller.getTaskListByUuid(task.getTaskListUuid());
+      // taskList.saveTask(task);
+      taskList.getTasks().forEach(task => console.log(task.getName()));
+      Display.renameTask(task);
+    }
   }
 
   // public functions 
@@ -43,7 +56,8 @@ const MainController = (() => {
     const options = {
       showAction: isUserTaskList,
       editTaskHandler: editTaskHandler,
-      addTaskHandler: addTaskHandler
+      addTaskHandler: addTaskHandler,
+      saveTaskHandler: saveTaskHandler
     };
     Display.showTaskList(taskList, options);
   }

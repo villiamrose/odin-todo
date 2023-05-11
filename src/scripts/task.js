@@ -9,6 +9,7 @@ const Task = (value) => {
   let notes = null;
   let isImportant = false;
   let isDone = false;
+  let taskListUuid = null;
  
   // private functions
   const setUpdated = () => {
@@ -25,6 +26,7 @@ const Task = (value) => {
   const getDueDate = () => dueDate;
   const getImportant = () => isImportant;
   const getNotes = () => notes;
+  const getTasklistUuid = () => taskListUuid;
 
   // setters
   const setName = (value) => {
@@ -58,6 +60,9 @@ const Task = (value) => {
       return dueDate;
     }
   }
+  const setTaskListUuid = (value) => {
+    taskListUuid = value;
+  }
 
   return {
     getUuid,
@@ -72,7 +77,8 @@ const Task = (value) => {
     setIsDone,
     setNotes,
     setIsImportant,
-    setDueDate
+    setDueDate,
+    setTaskListUuid
   }
 }
 

@@ -62,9 +62,13 @@ const DisplaySidebar = (() => {
     const list = document.createElement('li');
     list.className = 'list';
     list.id = taskList.getUuid();
-    list.addEventListener('dblclick', options.editHandler);
     list.addEventListener('click', options.selectHandler);
-    list.append(icon, name, nameInput);
+    list.append(icon, name);
+
+    if (!options.readOnly) {
+      list.addEventListener('dblclick', options.editHandler);
+      list.append(nameInput);
+    }
 
     return list;
   }

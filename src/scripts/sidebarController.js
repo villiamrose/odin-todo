@@ -58,6 +58,7 @@ const SidebarController = (() => {
   const initialize = (state) => {
     MainController.initialize(state);
     controller = state;
+    // MainController.showTaskList(controller.getUserTaskLists()[0]);
   }
 
   return {

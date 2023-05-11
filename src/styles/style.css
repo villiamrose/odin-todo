@@ -147,6 +147,39 @@ li:active {
   filter: none;
 }
 
+.task-list .icon {
+  z-index: 10;
+}
+
+.task-list .icon:hover {
+  content: url('../assets/radio-button-checked.svg');
+}
+
+.task-list .done {
+  filter: brightness(93%);
+}
+
+.task-list .done:hover {
+  filter: brightness(90%);
+}
+
+.task-list .mark {
+  border: none;
+  height: 1px;
+  width: calc(100% - 16px);
+  background-color: var(--text-color);
+  position: absolute;
+  left: 8px;
+}
+
+.task-list .done .icon {
+  content: url('../assets/radio-button-checked.svg');
+}
+
+.task-list .done .icon:hover {
+  content: url('../assets/radio-button.svg');
+}
+
 .task img {
   height: 24px;
 }

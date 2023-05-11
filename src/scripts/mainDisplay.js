@@ -25,6 +25,7 @@ const MainDisplay = (() => {
     const icon = document.createElement('img');
     icon.className = 'icon';
     icon.src = require(`../assets/radio-button.svg`);
+    icon.addEventListener('click', options.markTaskHandler);
 
     const label = document.createElement('span');
     label.textContent = task.getName();
@@ -46,6 +47,10 @@ const MainDisplay = (() => {
 
     const taskList = document.querySelector('.main .task-list');
     taskList.append(taskNode);
+
+    if (task.getIsDone()) {
+      markTask(task);
+    }
   }
 
   const buildNewTaskAction = (options) => {
@@ -66,6 +71,18 @@ const MainDisplay = (() => {
     actions.append(action);
   }
 
+  const getTaskNode = (task) => {
+    const tasks = Array.from(document.querySelectorAll('.main .task'));
+    const taskNode = tasks.find(item => item.id === task.getUuid());
+    return taskNode;
+  }
+
+  const taskSorter = (a, b) => {
+    const check = a.getIsDone() >= b.getIsDone();
+    const result = check ? 1 : -1;
+    return result;
+  }
+
   // public functions
   const showTaskList = (taskList, options) => {
     const current = document.querySelector('.main');
@@ -75,7 +92,8 @@ const MainDisplay = (() => {
 
     buildMain(taskList);
 
-    taskList.getTasks().forEach(task => buildTask(task, options));
+    const tasks = taskList.getTasks().slice().sort(taskSorter);
+    tasks.forEach(task => buildTask(task, options));
 
     if (options.showAction) {
       buildNewTaskAction(options);
@@ -101,20 +119,20 @@ const MainDisplay = (() => {
   }
 
   const editTask = (task) => {
-    const tasks = Array.from(document.querySelectorAll('.main .task'));
-    const taskNode = tasks.find(item => item.id === task.getUuid());
-    
-    const label = taskNode.querySelector('span');
-    label.style.display = 'none';
+    const taskNode = getTaskNode(task);
 
-    const input = taskNode.querySelector('input');
-    input.style.display = 'inline-block';
-    input.focus();
+    if (!taskNode.classList.contains('done')) {
+      const label = taskNode.querySelector('span');
+      label.style.display = 'none';
+
+      const input = taskNode.querySelector('input');
+      input.style.display = 'inline-block';
+      input.focus();
+    } 
   }
 
   const renameTask = (task) => {
-    const taskNodes = Array.from(document.querySelectorAll('.main .task'));
-    const taskNode = taskNodes.find(item => item.id === task.getUuid());
+    const taskNode = getTaskNode(task);
 
     const input = taskNode.querySelector('input');
     input.value = task.getName();
@@ -125,12 +143,36 @@ const MainDisplay = (() => {
     label.style.display = 'inline';
   }
 
+  const markTask = (task) => {
+    const taskNode = getTaskNode(task);
+    taskNode.classList.add('done');
+
+    const checkMark = taskNode.querySelector('.mark');
+    if (!checkMark) {
+      const mark = document.createElement('hr');
+      mark.className = 'mark';
+      taskNode.append(mark);
+    }
+  }
+
+  const unmarkTask = (task) => {
+    const taskNode = getTaskNode(task);
+    taskNode.classList.remove('done');
+
+    const mark = taskNode.querySelector('.mark');
+    if (mark) {
+      mark.remove();
+    }
+  }
+
   return {
     showTaskList,
     editTask,
     renameTask,
     selectTask,
     deselectTask,
-    isTaskSelected
+    isTaskSelected,
+    markTask,
+    unmarkTask
   }
 })();

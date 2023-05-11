@@ -31,7 +31,10 @@ const Controller = (() => {
       TaskList('Reminders')
     ]
 
-    list[0].addTask(Task('Task 1'));
+    const doneTask = Task('Task 1');
+    doneTask.setIsDone(true);
+
+    list[0].addTask(doneTask);
     list[0].addTask(Task('Task 2'));
     list[2].addTask(Task('Task 3'));
 

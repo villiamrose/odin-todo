@@ -38,12 +38,20 @@ const MainController = (() => {
       
       const name = target.value ? target.value : 'Untitled task';
       task.setName(name);
-      
-      const taskList = controller.getTaskListByUuid(task.getTaskListUuid());
-      // taskList.saveTask(task);
-      taskList.getTasks().forEach(task => console.log(task.getName()));
       Display.renameTask(task);
     }
+  }
+
+  const markTaskHandler = (event) => {
+    const target = event.currentTarget.parentNode;
+    const taskListUuid = target.id;
+    const selectedTaskList = controller.getSelectedTaskList();
+    const task = selectedTaskList.getTaskByUuid(taskListUuid);
+    const isDone = !task.getIsDone();
+    task.setIsDone(isDone);
+
+    showTaskList(selectedTaskList)
+
   }
 
   // public functions 
@@ -53,7 +61,8 @@ const MainController = (() => {
       showAction: isUserTaskList,
       editTaskHandler: editTaskHandler,
       addTaskHandler: addTaskHandler,
-      saveTaskHandler: saveTaskHandler
+      saveTaskHandler: saveTaskHandler,
+      markTaskHandler: markTaskHandler
     };
     Display.showTaskList(taskList, options);
   }

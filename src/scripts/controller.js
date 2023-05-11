@@ -46,6 +46,7 @@ const Controller = (() => {
       const icon = taskList.getName().toLowerCase();
       const options = {
         icon: icon, 
+        readOnly: true,
         selectHandler: SidebarController.selectTaskListHandler,
         editHandler: SidebarController.editTaskListHandler,
         saveHandler: SidebarController.saveTaskListHandler
@@ -129,6 +130,10 @@ const Controller = (() => {
     }
   }
 
+  const addTaskList = (taskList) => {
+    userTaskLists.push(taskList);
+  }
+
   const initialize = () => {
     const options = {
       addTaskListHandler: SidebarController.addTaskListHandler
@@ -141,6 +146,7 @@ const Controller = (() => {
       isUserTaskList,
       getTaskListByUuid,
       saveTaskList,
+      addTaskList,
       setSelectedTaskList,
       getSelectedTaskList,
       getUserTaskLists

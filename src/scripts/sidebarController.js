@@ -10,8 +10,9 @@ const SidebarController = (() => {
 
   // public functions 
   const addTaskListHandler = (event) => {
-    const newTaskList = TaskList('');
-    userTaskLists.push(newTaskList);
+    const taskList = TaskList('');
+    controller.addTaskList(taskList);
+    
     const options = {
       icon: 'list',
       editable: true, 
@@ -19,7 +20,7 @@ const SidebarController = (() => {
       editHandler: editTaskListHandler,
       saveHandler: saveTaskListHandler
     }
-    Display.addTaskList(newTaskList, options);
+    Display.addTaskList(taskList, options);
   }
 
   const editTaskListHandler = (event) => {

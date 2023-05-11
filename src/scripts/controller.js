@@ -84,34 +84,6 @@ const Controller = (() => {
     return isUserTaskList;
   }
 
-  const showTaskList = (taskList) => {
-    let isUserTaskList = false;
-    userTaskLists.forEach(item => {
-      if (item.getUuid() === taskList.getUuid()) {
-        isUserTaskList = true;
-      }
-    });
-    const options = {
-      showAction: isUserTaskList,
-      addTaskHandler: addTaskHandler
-    };
-    Display.showTaskList(taskList, options);
-  }
-
-  const addTaskHandler = (event) => {
-    const target = event.currentTarget;
-    const key = event.key;
-    if(key === 'Enter' && target.value) {
-      const task = Task(target.value);
-      const taskListUuid = Display.getSelectedTaskList().id;
-      const index = userTaskLists.findIndex(item => item.getUuid() === taskListUuid);
-      const taskList = userTaskLists[index];
-      taskList.addTask(task);
-      userTaskLists[index] = taskList;
-      showTaskList(taskList);
-    }
-  }
-
   // public functions 
   const getUserTaskLists = () => userTaskLists;
   const getSelectedTaskList = () => selectedTaskList;

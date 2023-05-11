@@ -92,16 +92,6 @@ const Controller = (() => {
     selectedTaskList = taskList;
   }
 
-  const saveTaskList = (taskList) => {
-    const userIdx = userTaskLists.findIndex(item => item.getUuid() === taskList.getUuid());
-    const autoIdx = autoTaskLists.findIndex(item => item.getUuid() === taskList.getUuid());
-    if (userIdx) {
-      userTaskLists[userIdx] = taskList;
-    } else if (autoIdx) {
-      autoTaskLists[autoIdx] = taskList;
-    }
-  }
-
   const addTaskList = (taskList) => {
     userTaskLists.push(taskList);
   }
@@ -117,7 +107,6 @@ const Controller = (() => {
     const state = {
       isUserTaskList,
       getTaskListByUuid,
-      saveTaskList,
       addTaskList,
       setSelectedTaskList,
       getSelectedTaskList,

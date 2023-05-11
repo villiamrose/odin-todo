@@ -14,12 +14,9 @@ const MainController = (() => {
     const key = event.key;
 
     if(key === 'Enter' && target.value) {
-      const taskList = controller.getSelectedTaskList();
       const task = Task(target.value);
-      
+      const taskList = controller.getSelectedTaskList();
       taskList.addTask(task);
-      
-      controller.saveTaskList(taskList);
       showTaskList(taskList);
     }
   }
@@ -28,7 +25,6 @@ const MainController = (() => {
     const target = event.currentTarget.parentNode;
     const selectedTaskList = controller.getSelectedTaskList();
     const task = selectedTaskList.getTaskByUuid(target.id);
-
     Display.editTask(task);
   }
 

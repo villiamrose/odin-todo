@@ -51,7 +51,7 @@ const DisplaySidebar = (() => {
     nameInput.addEventListener('focusout', options.saveHandler);
     nameInput.addEventListener('keypress', options.saveHandler);
 
-    if(options.editable) {
+    if(options.showInput) {
       nameInput.style.display = 'span';
       name.style.display = 'none';
     } else {
@@ -102,7 +102,7 @@ const DisplaySidebar = (() => {
     const lists = document.querySelector('.navigation .lists');
     lists.append(taskListNode);
     
-    if (options.editable) {
+    if (options.showInput) {
       selectTaskList(taskList);
       focusTaskList(taskListNode);
     }

@@ -12,10 +12,10 @@ const SidebarController = (() => {
   const addTaskListHandler = (event) => {
     const taskList = TaskList('');
     controller.addTaskList(taskList);
-    
+
     const options = {
       icon: 'list',
-      editable: true, 
+      showInput: true, 
       selectHandler: selectTaskListHandler,
       editHandler: editTaskListHandler,
       saveHandler: saveTaskListHandler

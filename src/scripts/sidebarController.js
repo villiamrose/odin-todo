@@ -12,7 +12,8 @@ const SidebarController = (() => {
   const addTaskListHandler = (event) => {
     const taskList = TaskList('');
     controller.addTaskList(taskList);
-
+    controller.setSelectedTaskList(taskList);
+    
     const options = {
       icon: 'list',
       showInput: true, 
@@ -21,6 +22,16 @@ const SidebarController = (() => {
       saveHandler: saveTaskListHandler
     }
     Display.addTaskList(taskList, options);
+    
+  }
+
+  const selectTaskListHandler = (event) => {
+    const target = event.currentTarget;    
+    const taskList = controller.getTaskListByUuid(target.id);
+    
+    controller.setSelectedTaskList(taskList);
+    Display.selectTaskList(taskList);
+    MainController.showTaskList(taskList);
   }
 
   const editTaskListHandler = (event) => {
@@ -34,33 +45,19 @@ const SidebarController = (() => {
     if(event.key === 'Enter' || (event.type === 'focusout' && targetDisplay !== 'none')) {
       const target = event.currentTarget;
       const taskListUuid = target.parentNode.id;
+      
       const taskList = controller.getTaskListByUuid(taskListUuid);
       const name = target.value ? target.value : 'Untitled list';
       taskList.setName(name);
 
-      Display.renameTaskList(taskList);
       controller.saveTaskList(taskList);
-
-      const options = {
-        showAction: true,
-        addTaskHandler: MainController.addTaskHandler
-      };
-      Display.showTaskList(taskList, options);
+      Display.renameTaskList(taskList);
+      MainController.showTaskList(taskList);
     }
-  }
-
-  const selectTaskListHandler = (event) => {
-    const target = event.currentTarget;    
-    const taskList = controller.getTaskListByUuid(target.id);
-    
-    controller.setSelectedTaskList(taskList);
-    Display.selectTaskList(taskList);
-    MainController.showTaskList(taskList);
   }
 
   const initialize = (state) => {
     MainController.initialize(state);
-
     controller = state;
   }
 

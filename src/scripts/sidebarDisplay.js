@@ -19,8 +19,8 @@ const DisplaySidebar = (() => {
     return action;
   }
 
-  const focusTaskList = (taskList) => {
-    const input = taskList.querySelector('input');
+  const focusInput = (node) => {
+    const input = node.querySelector('input');
     input.focus();
   }
 
@@ -104,7 +104,7 @@ const DisplaySidebar = (() => {
     
     if (options.showInput) {
       selectTaskList(taskList);
-      focusTaskList(taskListNode);
+      focusInput(taskListNode);
     }
   }
 
@@ -119,7 +119,7 @@ const DisplaySidebar = (() => {
     const input = taskListNode.querySelector('input');
     input.style.display = 'inline-block';
 
-    focusTaskList(taskListNode);
+    focusInput(taskListNode);
   }
 
   const renameTaskList = (taskList) => {

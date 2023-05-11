@@ -34,11 +34,8 @@ const TaskList = (value) => {
     return name;
   } 
   const addTask = (value) => {
-    if (Array.isArray(value)) {
-      tasks.push(...value);
-    } else {
-      tasks.push(value);
-    }
+    value.setTaskListUuid(uuid);
+    tasks.push(value);
     setUpdated();
     return tasks;
   }
@@ -52,7 +49,10 @@ const TaskList = (value) => {
     }
     return tasks;
   } 
-
+  const adoptTask = (value) => {
+    tasks.push(value);
+    return tasks;
+  }
   return {
     getUuid,
     getName,
@@ -62,7 +62,8 @@ const TaskList = (value) => {
     getTaskByUuid,
     setName,
     addTask,
-    deleteTask
+    deleteTask,
+    adoptTask
   }
 }
 

@@ -26,7 +26,7 @@ const Task = (value) => {
   const getDueDate = () => dueDate;
   const getImportant = () => isImportant;
   const getNotes = () => notes;
-  const getTasklistUuid = () => taskListUuid;
+  const getTaskListUuid = () => taskListUuid;
 
   // setters
   const setName = (value) => {
@@ -73,6 +73,7 @@ const Task = (value) => {
     getDueDate,
     getImportant,
     getNotes,
+    getTaskListUuid,
     setName,
     setIsDone,
     setNotes,

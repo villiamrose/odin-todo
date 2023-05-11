@@ -47,9 +47,9 @@ const Controller = (() => {
       const options = {
         icon: icon, 
         readOnly: true,
-        selectHandler: SidebarController.selectTaskListHandler,
-        editHandler: SidebarController.editTaskListHandler,
-        saveHandler: SidebarController.saveTaskListHandler
+        selectTaskListHandler: SidebarController.selectTaskListHandler,
+        editTaskListHandler: SidebarController.editTaskListHandler,
+        saveTaskListHandler: SidebarController.saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -58,9 +58,9 @@ const Controller = (() => {
     userTaskLists.forEach(taskList => {
       const options = {
         icon: 'list', 
-        selectHandler: SidebarController.selectTaskListHandler,
-        editHandler: SidebarController.editTaskListHandler,
-        saveHandler: SidebarController.saveTaskListHandler
+        selectTaskListHandler: SidebarController.selectTaskListHandler,
+        editTaskListHandler: SidebarController.editTaskListHandler,
+        saveTaskListHandler: SidebarController.saveTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });

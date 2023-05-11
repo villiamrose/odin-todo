@@ -17,9 +17,9 @@ const SidebarController = (() => {
     const options = {
       icon: 'list',
       showInput: true, 
-      selectHandler: selectTaskListHandler,
-      editHandler: editTaskListHandler,
-      saveHandler: saveTaskListHandler
+      selectTaskListHandler: selectTaskListHandler,
+      editTaskListHandler: editTaskListHandler,
+      saveTaskListHandler: saveTaskListHandler
     }
     Display.addTaskList(taskList, options);
     

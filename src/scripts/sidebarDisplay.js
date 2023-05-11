@@ -48,8 +48,8 @@ const DisplaySidebar = (() => {
     nameInput.className = 'list';
     nameInput.value = taskList.getName();
     nameInput.placeholder = 'Untitled list';
-    nameInput.addEventListener('focusout', options.saveHandler);
-    nameInput.addEventListener('keypress', options.saveHandler);
+    nameInput.addEventListener('focusout', options.saveTaskListHandler);
+    nameInput.addEventListener('keypress', options.saveTaskListHandler);
 
     if(options.showInput) {
       nameInput.style.display = 'span';
@@ -62,11 +62,11 @@ const DisplaySidebar = (() => {
     const list = document.createElement('li');
     list.className = 'list';
     list.id = taskList.getUuid();
-    list.addEventListener('click', options.selectHandler);
+    list.addEventListener('click', options.selectTaskListHandler);
     list.append(icon, name);
 
     if (!options.readOnly) {
-      list.addEventListener('dblclick', options.editHandler);
+      list.addEventListener('dblclick', options.editTaskListHandler);
       list.append(nameInput);
     }
 

@@ -1,6 +1,8 @@
 import { TaskList } from "./tasklist.js";
 import { Task } from './task.js';
 import { Display } from "./display.js";
+import { DetailsController } from "./detailsController.js";
+import { DisplaySidebar } from "./sidebarDisplay.js";
 
 export { MainController }
 
@@ -44,14 +46,22 @@ const MainController = (() => {
 
   const markTaskHandler = (event) => {
     const target = event.currentTarget.parentNode;
-    const taskListUuid = target.id;
+    const taskUuid = target.id;
     const selectedTaskList = controller.getSelectedTaskList();
-    const task = selectedTaskList.getTaskByUuid(taskListUuid);
+    const task = selectedTaskList.getTaskByUuid(taskUuid);
     const isDone = !task.getIsDone();
     task.setIsDone(isDone);
 
     showTaskList(selectedTaskList)
 
+  }
+
+  const selectTaskHandler = (event) => {
+    const taskUuid = event.currentTarget.id;
+    const selectedTaskList = controller.getSelectedTaskList();
+    const task = selectedTaskList.getTaskByUuid(taskUuid);
+
+    DetailsController.showTaskDetails(task);
   }
 
   // public functions 
@@ -62,18 +72,20 @@ const MainController = (() => {
       editTaskHandler: editTaskHandler,
       addTaskHandler: addTaskHandler,
       saveTaskHandler: saveTaskHandler,
-      markTaskHandler: markTaskHandler
+      markTaskHandler: markTaskHandler,
+      selectTaskHandler: selectTaskHandler
     };
     Display.showTaskList(taskList, options);
   }
 
   const initialize = (state) => {
+    DetailsController.initialize(state);
+
     controller = state;
   }
 
   return {
     initialize,
     showTaskList,
-
   }
 })();

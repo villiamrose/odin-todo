@@ -44,6 +44,7 @@ const MainDisplay = (() => {
     taskNode.className = 'task';
     taskNode.id = task.getUuid();
     taskNode.append(icon, label, input);
+    taskNode.addEventListener('click', options.selectTaskHandler);
 
     const taskList = document.querySelector('.main .task-list');
     taskList.append(taskNode);

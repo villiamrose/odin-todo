@@ -78,6 +78,62 @@ const DetailsDisplay = (() => {
 
     return container;
   }
+
+  const buildActions = (task, options) => {
+    const doneIcon = document.createElement('img');
+    doneIcon.src = require(`../assets/done.svg`);
+    
+    const doneLabel = document.createElement('p');
+    doneLabel.textContent = 'Done';
+    
+    const doneContainer = document.createElement('div');
+    doneContainer.className = 'action';
+    doneContainer.append(doneIcon, doneLabel);
+
+    const importantIcon = document.createElement('img');
+    importantIcon.src = require(`../assets/important.svg`);
+    
+    const importantLabel = document.createElement('p');
+    importantLabel.textContent = 'Important';
+    
+    const importantContainer = document.createElement('div');
+    importantContainer.className = 'action';
+    importantContainer.append(importantIcon, importantLabel);
+
+    const deleteIcon = document.createElement('img');
+    deleteIcon.src = require(`../assets/delete.svg`);
+    
+    const deleteLabel = document.createElement('p');
+    deleteLabel.textContent = 'Delete';
+    
+    const deleteContainer = document.createElement('div');
+    deleteContainer.className = 'action';
+    deleteContainer.append(deleteIcon, deleteLabel);
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.append(doneContainer, importantContainer, deleteContainer);
+
+    return actions;
+  }
+
+  const buildCreated = (task) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = task.getCreated().toLocaleDateString('en-US', options);
+    const date = document.createElement('span');
+    date.id = 'created';
+    date.textContent = formattedDate;
+
+    const created = document.createElement('p');
+    created.textContent = 'Created on ';
+    created.append(date);
+
+    const container = document.createElement('div');
+    container.className = 'created';
+    container.append(created);
+
+    return container;
+  }
   
   // public functions
   const showTaskDetails = (task, options) => {
@@ -87,11 +143,13 @@ const DetailsDisplay = (() => {
     const dueDate = buildDuedate(task);
     const notes = buildNotes(task);
     const updated = buildUpdated(task);
+    const actions = buildActions(task, options);
+    const created = buildCreated(task);
 
     const details = document.createElement('div');
     details.id = task.getUuid();
     details.className = 'details';
-    details.append(header, dueDate, notes, updated);
+    details.append(header, dueDate, notes, updated, actions, created);
 
     const body = document.querySelector('body');
     body.append(details);

@@ -29,6 +29,7 @@ const SidebarController = (() => {
     const target = event.currentTarget;    
     const taskList = controller.getTaskListByUuid(target.id);
     
+    controller.setSelectedTask(null);
     controller.setSelectedTaskList(taskList);
     Display.selectTaskList(taskList);
     MainController.showTaskList(taskList);

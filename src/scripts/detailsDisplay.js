@@ -155,7 +155,12 @@ const DetailsDisplay = (() => {
     body.append(details);
   }
 
+  const hideTaskDetails = () => {
+    closeDetails();
+  }
+
   return {
-    showTaskDetails
+    showTaskDetails,
+    hideTaskDetails
   }
 })();

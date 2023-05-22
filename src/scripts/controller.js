@@ -8,6 +8,7 @@ export { Controller }
 const Controller = (() => {
   // private variables
   let selectedTaskList = null;
+  let selectedTask = null;
   let autoTaskLists = [];
   let userTaskLists = [];
 
@@ -90,9 +91,14 @@ const Controller = (() => {
   // public functions 
   const getUserTaskLists = () => userTaskLists;
   const getSelectedTaskList = () => selectedTaskList;
+  const getSelectedTask = () => selectedTask;
 
   const setSelectedTaskList = (taskList) => {
     selectedTaskList = taskList;
+  }
+
+  const setSelectedTask = (task) => {
+    selectedTask = task;
   }
 
   const addTaskList = (taskList) => {
@@ -112,7 +118,9 @@ const Controller = (() => {
       getTaskListByUuid,
       addTaskList,
       setSelectedTaskList,
+      setSelectedTask,
       getSelectedTaskList,
+      getSelectedTask,
       getUserTaskLists
     };
     SidebarController.initialize(state);

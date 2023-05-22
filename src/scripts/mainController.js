@@ -60,8 +60,15 @@ const MainController = (() => {
     const taskUuid = event.currentTarget.id;
     const selectedTaskList = controller.getSelectedTaskList();
     const task = selectedTaskList.getTaskByUuid(taskUuid);
+    const selectedTask = controller.getSelectedTask();
 
-    DetailsController.showTaskDetails(task);
+    if (selectedTask && selectedTask.getUuid() === task.getUuid()) {
+      controller.setSelectedTask(null);
+      DetailsController.hideTaskDetails();
+    } else {
+      controller.setSelectedTask(task);
+      DetailsController.showTaskDetails(task);
+    }
   }
 
   // public functions 

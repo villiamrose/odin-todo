@@ -17,8 +17,13 @@ const DetailsController = (() => {
     DetailsDisplay.showTaskDetails(task, options);
   }
 
+  const hideTaskDetails = () => {
+    DetailsDisplay.hideTaskDetails();
+  }
+
   return {
     initialize,
-    showTaskDetails
+    showTaskDetails,
+    hideTaskDetails
   }
 })();

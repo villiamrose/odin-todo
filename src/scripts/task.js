@@ -24,7 +24,7 @@ const Task = (value) => {
   const getCreated = () => created;
   const getUpdated = () => updated;
   const getDueDate = () => dueDate;
-  const getImportant = () => isImportant;
+  const getIsImportant = () => isImportant;
   const getNotes = () => notes;
   const getTaskListUuid = () => taskListUuid;
 
@@ -71,7 +71,7 @@ const Task = (value) => {
     getCreated,
     getUpdated,
     getDueDate,
-    getImportant,
+    getIsImportant,
     getNotes,
     getTaskListUuid,
     setName,

@@ -2,6 +2,19 @@ export { DetailsDisplay };
 
 const DetailsDisplay = (() => {
   // private functions
+
+  const padTo2Digits = (num) => {
+    return num.toString().padStart(2, '0');
+  }
+
+  const formatDate = (date) => {
+    return [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-');
+  }
+
   const closeDetails = () => {
     const details = document.querySelector('.details');
     if (details) {
@@ -27,7 +40,7 @@ const DetailsDisplay = (() => {
 
   }
 
-  const buildDuedate = (task) => {
+  const buildDuedate = (task, options) => {
     const label = document.createElement('label');
     label.htmlFor = 'duedate';
     label.textContent = 'Due date ';
@@ -35,7 +48,11 @@ const DetailsDisplay = (() => {
     const input = document.createElement('input');
     input.id = 'duedate';
     input.name = 'duedate';
-    input.type = 'datetime-local';
+    input.type = 'date';
+    if (task.getDueDate()) {
+      input.value = formatDate(task.getDueDate());
+    }
+    console.log(input.value);
 
     const row = document.createElement('row');
     row.append(label, input);
@@ -43,7 +60,7 @@ const DetailsDisplay = (() => {
     return row;
   }
 
-  const buildNotes = (task) => {
+  const buildNotes = (task, options) => {
     const label = document.createElement('p');
     label.textContent = 'Notes';
   
@@ -52,6 +69,7 @@ const DetailsDisplay = (() => {
     textArea.name = 'notes';
     textArea.cols = '30';
     textArea.rows = '15';
+    textArea.value = task.getNotes();
 
     const container = document.createElement('label');
     container.className = 'notes';
@@ -89,6 +107,9 @@ const DetailsDisplay = (() => {
     const doneContainer = document.createElement('div');
     doneContainer.className = 'action';
     doneContainer.append(doneIcon, doneLabel);
+    if (task.getIsDone()) {
+      doneContainer.classList.add('selected');
+    }
 
     const importantIcon = document.createElement('img');
     importantIcon.src = require(`../assets/important.svg`);
@@ -99,6 +120,9 @@ const DetailsDisplay = (() => {
     const importantContainer = document.createElement('div');
     importantContainer.className = 'action';
     importantContainer.append(importantIcon, importantLabel);
+    if (task.getIsImportant()) {
+      importantContainer.classList.add('selected');
+    }
 
     const deleteIcon = document.createElement('img');
     deleteIcon.src = require(`../assets/delete.svg`);
@@ -140,8 +164,8 @@ const DetailsDisplay = (() => {
     closeDetails();
 
     const header = buildHeader(task);
-    const dueDate = buildDuedate(task);
-    const notes = buildNotes(task);
+    const dueDate = buildDuedate(task, options);
+    const notes = buildNotes(task, options);
     const updated = buildUpdated(task);
     const actions = buildActions(task, options);
     const created = buildCreated(task);

@@ -35,8 +35,17 @@ const Controller = (() => {
     const doneTask = Task('Task 1');
     doneTask.setIsDone(true);
 
+    let dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + 1);
+
+    const detailedTask = Task('Task 2');
+    detailedTask.setNotes("Lorem ipsum");
+    detailedTask.setIsImportant(true);
+    detailedTask.setDueDate(dueDate);
+
+
     list[0].addTask(doneTask);
-    list[0].addTask(Task('Task 2'));
+    list[0].addTask(detailedTask);
     list[2].addTask(Task('Task 3'));
 
     userTaskLists = list;

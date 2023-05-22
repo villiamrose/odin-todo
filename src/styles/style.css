@@ -228,7 +228,7 @@ li:active {
   margin-bottom: 8px;
 }
 
-.details input[type="datetime-local"] {
+.details input[type="date"] {
   flex: auto;
 }
 
@@ -263,10 +263,14 @@ li:active {
   align-items: center
 }
 
+.details .action.selected {
+  filter: brightness(93%);
+}
+
 .details .action:hover {
-  filter: brightness(95%);
+  filter: brightness(90%);
 }
 
 .details .action:active {
-  filter: brightness(97%);
+  filter: brightness(95%);
 }

@@ -1,7 +1,7 @@
-const arr = ['a', 'b', 'c'];
+let date = new Date();
 
-let b = arr.find(item => item === 'b');
-b = 'd';
+console.log(date);
 
-console.log(b);
-console.log(arr);
+date.setDate(date.getDate() + 1);
+
+console.log(date);

@@ -1,6 +1,6 @@
-export { DisplaySidebar };
+export { SidebarDisplay };
 
-const DisplaySidebar = (() => {
+const SidebarDisplay = (() => {
   // private functions
   const buildNewListAction = (options) => {
     const icon = document.createElement('img');

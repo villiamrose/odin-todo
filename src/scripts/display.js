@@ -1,4 +1,4 @@
-import { DisplaySidebar } from './sidebarDisplay.js';
+import { SidebarDisplay } from './sidebarDisplay.js';
 import { MainDisplay } from './mainDisplay.js';
 import { DetailsDisplay } from './detailsDisplay.js'
 
@@ -18,7 +18,7 @@ const Display = (() => {
   const initialize = (options) => {
     if (!isInitialized) {
       isInitialized = true;
-      DisplaySidebar.buildSidebar(options);
+      SidebarDisplay.buildSidebar(options);
     }
   }
 
@@ -34,11 +34,11 @@ const Display = (() => {
     markTask: MainDisplay.markTask,
     unmarkTask: MainDisplay.unmarkTask,
 
-    addTaskList: DisplaySidebar.addTaskList,
-    editTaskList: DisplaySidebar.editTaskList,
-    renameTaskList: DisplaySidebar.renameTaskList,
-    selectTaskList: DisplaySidebar.selectTaskList,
-    getSelectedTaskList: DisplaySidebar.getSelectedTaskList,
+    addTaskList: SidebarDisplay.addTaskList,
+    editTaskList: SidebarDisplay.editTaskList,
+    renameTaskList: SidebarDisplay.renameTaskList,
+    selectTaskList: SidebarDisplay.selectTaskList,
+    getSelectedTaskList: SidebarDisplay.getSelectedTaskList,
 
     showTaskDetails: DetailsDisplay.showTaskDetails,
     hideTaskDetails: DetailsDisplay.hideTaskDetails

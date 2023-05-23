@@ -1,4 +1,4 @@
-import { DetailsDisplay } from "./detailsDisplay.js";
+import { Display } from "./display.js";
 
 export { DetailsController };
 
@@ -23,6 +23,7 @@ const DetailsController = (() => {
     const dueDate = parseDate(value);
     const task = controller.getSelectedTask();
     task.setDueDate(dueDate);
+    showTaskDetails(task);
   }
 
   const editNotesHandler = (event) => {
@@ -30,6 +31,7 @@ const DetailsController = (() => {
     const value = target.value;
     const task = controller.getSelectedTask();
     task.setNotes(value);
+    showTaskDetails(task);
   }
 
   const markIsDoneHandler = (event) => {
@@ -58,11 +60,11 @@ const DetailsController = (() => {
       deleteHandler: deleteHandler
     };
 
-    DetailsDisplay.showTaskDetails(task, options);
+    Display.showTaskDetails(task, options);
   }
 
   const hideTaskDetails = () => {
-    DetailsDisplay.hideTaskDetails();
+    Display.hideTaskDetails();
   }
 
   return {

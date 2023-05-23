@@ -1,5 +1,6 @@
 import { DisplaySidebar } from './sidebarDisplay.js';
 import { MainDisplay } from './mainDisplay.js';
+import { DetailsDisplay } from './detailsDisplay.js'
 
 export { Display };
 
@@ -28,8 +29,6 @@ const Display = (() => {
 
     showTaskList: MainDisplay.showTaskList,
     editTask: MainDisplay.editTask,
-    selectTask: MainDisplay.selectTask,
-    deselectTask: MainDisplay.deselectTask,
     isTaskSelected: MainDisplay.isTaskSelected,    
     renameTask: MainDisplay.renameTask,
     markTask: MainDisplay.markTask,
@@ -40,5 +39,8 @@ const Display = (() => {
     renameTaskList: DisplaySidebar.renameTaskList,
     selectTaskList: DisplaySidebar.selectTaskList,
     getSelectedTaskList: DisplaySidebar.getSelectedTaskList,
+
+    showTaskDetails: DetailsDisplay.showTaskDetails,
+    hideTaskDetails: DetailsDisplay.hideTaskDetails
   }
 })();

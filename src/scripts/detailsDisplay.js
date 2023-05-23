@@ -70,6 +70,7 @@ const DetailsDisplay = (() => {
     textArea.cols = '30';
     textArea.rows = '15';
     textArea.value = task.getNotes();
+    textArea.addEventListener('focusout', options.editNotesHandler);
 
     const container = document.createElement('label');
     container.className = 'notes';

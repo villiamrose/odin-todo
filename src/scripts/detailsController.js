@@ -26,7 +26,10 @@ const DetailsController = (() => {
   }
 
   const editNotesHandler = (event) => {
-
+    const target = event.currentTarget;
+    const value = target.value;
+    const task = controller.getSelectedTask();
+    task.setNotes(value);
   }
 
   const markIsDoneHandler = (event) => {

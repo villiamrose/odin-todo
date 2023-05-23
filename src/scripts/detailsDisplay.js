@@ -7,12 +7,24 @@ const DetailsDisplay = (() => {
     return num.toString().padStart(2, '0');
   }
 
-  const formatDate = (date) => {
+  const inputDate = (date) => {
     return [
       date.getFullYear(),
       padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
     ].join('-');
+  }
+
+  const formatDate = (date) => {
+    const options = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: 'numeric', 
+      minute: 'numeric' 
+    };
+    const formattedDate = date.toLocaleString('en-US', options);
+    return formattedDate
   }
 
   const closeDetails = () => {
@@ -50,7 +62,7 @@ const DetailsDisplay = (() => {
     input.name = 'duedate';
     input.type = 'date';
     if (task.getDueDate()) {
-      input.value = formatDate(task.getDueDate());
+      input.value = inputDate(task.getDueDate());
     }
     input.addEventListener('focusout', options.editDueDateHandler);
 
@@ -81,8 +93,7 @@ const DetailsDisplay = (() => {
   }
 
   const buildUpdated = (task) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = task.getUpdated().toLocaleDateString('en-US', options);
+    const formattedDate = formatDate(task.getUpdated());
     const date = document.createElement('span');
     date.id = 'updated';
     date.textContent = formattedDate;
@@ -143,8 +154,7 @@ const DetailsDisplay = (() => {
   }
 
   const buildCreated = (task) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = task.getCreated().toLocaleDateString('en-US', options);
+    const formattedDate = formatDate(task.getCreated());
     const date = document.createElement('span');
     date.id = 'created';
     date.textContent = formattedDate;

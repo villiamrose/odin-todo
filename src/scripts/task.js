@@ -54,7 +54,7 @@ const Task = (value) => {
     return notes;
   }
   const setDueDate = (value) => {
-    if (value instanceof Date) {
+    if (value instanceof Date || value === null) {
       setUpdated();
       dueDate = value;
       return dueDate;

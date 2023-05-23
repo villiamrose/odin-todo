@@ -52,7 +52,7 @@ const DetailsDisplay = (() => {
     if (task.getDueDate()) {
       input.value = formatDate(task.getDueDate());
     }
-    console.log(input.value);
+    input.addEventListener('focusout', options.editDueDateHandler);
 
     const row = document.createElement('row');
     row.append(label, input);

@@ -101,18 +101,18 @@ const MainDisplay = (() => {
     }
   }
 
-  const selectTask = (task) => {
-    const selectedTask = document.querySelector('.task.selected');
-    if (selectedTask) {
-      selectedTask.classList.remove('selected');
-    }
+  // const selectTask = (task) => {
+  //   const selectedTask = document.querySelector('.task.selected');
+  //   if (selectedTask) {
+  //     selectedTask.classList.remove('selected');
+  //   }
 
-    task.classList.add('selected');
-  }
+  //   task.classList.add('selected');
+  // }
 
-  const deselectTask = (task) => {
-    task.classList.remove('selected');
-  }
+  // const deselectTask = (task) => {
+  //   task.classList.remove('selected');
+  // }
 
   const isTaskSelected = (task) => {
     const isSelected = task.classList.contains('selected');
@@ -170,8 +170,8 @@ const MainDisplay = (() => {
     showTaskList,
     editTask,
     renameTask,
-    selectTask,
-    deselectTask,
+    // selectTask,
+    // deselectTask,
     isTaskSelected,
     markTask,
     unmarkTask

@@ -40,6 +40,9 @@ const MainController = (() => {
       
       const name = target.value ? target.value : 'Untitled task';
       task.setName(name);
+
+      controller.setSelectedTask(task);
+      DetailsController.showTaskDetails(task);
       Display.renameTask(task);
     }
   }

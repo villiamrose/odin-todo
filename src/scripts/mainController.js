@@ -41,7 +41,6 @@ const MainController = (() => {
       const name = target.value ? target.value : 'Untitled task';
       task.setName(name);
 
-      controller.setSelectedTask(task);
       DetailsController.showTaskDetails(task);
       Display.renameTask(task);
     }
@@ -55,8 +54,13 @@ const MainController = (() => {
     const isDone = !task.getIsDone();
     task.setIsDone(isDone);
 
-    showTaskList(selectedTaskList)
+    if (task.getIsDone()) {
+      DetailsController.showTaskDetails(task);
+    } else {
+      DetailsController.hideTaskDetails();
+    }
 
+    showTaskList(selectedTaskList)
   }
 
   const selectTaskHandler = (event) => {
@@ -66,10 +70,8 @@ const MainController = (() => {
     const selectedTask = controller.getSelectedTask();
 
     if (selectedTask && selectedTask.getUuid() === task.getUuid()) {
-      controller.setSelectedTask(null);
       DetailsController.hideTaskDetails();
     } else {
-      controller.setSelectedTask(task);
       DetailsController.showTaskDetails(task);
     }
   }

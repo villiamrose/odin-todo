@@ -52,6 +52,7 @@ const DetailsController = (() => {
   }
 
   const showTaskDetails = (task) => {
+    controller.setSelectedTask(task);
     const options = {
       editDueDateHandler: editDueDateHandler,
       editNotesHandler: editNotesHandler,
@@ -64,6 +65,7 @@ const DetailsController = (() => {
   }
 
   const hideTaskDetails = () => {
+    controller.setSelectedTask(null);
     Display.hideTaskDetails();
   }
 

@@ -135,6 +135,7 @@ const DetailsDisplay = (() => {
     if (task.getIsImportant()) {
       importantContainer.classList.add('selected');
     }
+    importantContainer.addEventListener('click', options.markIsImportantHandler);
 
     const deleteIcon = document.createElement('img');
     deleteIcon.src = require(`../assets/delete.svg`);

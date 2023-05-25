@@ -44,7 +44,10 @@ const DetailsController = (() => {
   }
 
   const markIsImportantHandler = (event) => {
-
+    const task = controller.getSelectedTask();
+    const isImportant = !task.getIsImportant();
+    task.setIsImportant(isImportant);
+    showTaskDetails(task);
   }
 
   const deleteHandler = (event) => {

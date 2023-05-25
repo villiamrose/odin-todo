@@ -91,9 +91,9 @@ const MainController = (() => {
   }
 
   const initialize = (state) => {
-    DetailsController.initialize(state);
-
     controller = state;
+    const mcState = Object.assign(state, {showTaskList})
+    DetailsController.initialize(mcState);
   }
 
   return {

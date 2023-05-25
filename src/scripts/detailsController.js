@@ -35,7 +35,12 @@ const DetailsController = (() => {
   }
 
   const markIsDoneHandler = (event) => {
-
+    const task = controller.getSelectedTask();
+    const taskList = controller.getSelectedTaskList();
+    const isDone = !task.getIsDone();
+    task.setIsDone(isDone);
+    controller.showTaskList(taskList);
+    showTaskDetails(task);
   }
 
   const markIsImportantHandler = (event) => {

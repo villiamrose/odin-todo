@@ -121,6 +121,7 @@ const DetailsDisplay = (() => {
     if (task.getIsDone()) {
       doneContainer.classList.add('selected');
     }
+    doneContainer.addEventListener('click', options.markIsDoneHandler);
 
     const importantIcon = document.createElement('img');
     importantIcon.src = require(`../assets/important.svg`);

@@ -4,9 +4,10 @@ const TaskList = (value) => {
   // private variables
   const uuid = Uuid();
   const created = new Date();
-  const tasks = [];
+  let tasks = [];
   let name = value;
   let updated = new Date();
+  let taskLoader = null;
 
   // private functions
   const setUpdated = () => {
@@ -52,10 +53,14 @@ const TaskList = (value) => {
       tasks.splice(index, 1);
     }
     return tasks;
-  } 
-  const adoptTask = (value) => {
-    tasks.push(value);
-    return tasks;
+  }
+  const setTaskLoader = (loader) => {
+    taskLoader = loader;
+  }
+  const loadTasks = () => {
+    if (taskLoader) {
+      tasks = taskLoader();
+    }
   }
   return {
     getUuid,
@@ -67,7 +72,8 @@ const TaskList = (value) => {
     setName,
     addTask,
     deleteTask,
-    adoptTask
+    setTaskLoader,
+    loadTasks
   }
 }
 

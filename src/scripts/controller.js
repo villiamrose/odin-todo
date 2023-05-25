@@ -13,10 +13,25 @@ const Controller = (() => {
   let userTaskLists = [];
 
   // private functions
+  const importantLoader = () => {
+    const tasks = [];
+    userTaskLists.forEach(taskList => {
+      taskList.getTasks().forEach(task => {
+        if (task.getIsImportant()) {
+          tasks.push(task);
+        }
+      });
+    });
+    return tasks;
+  }
+  
   const loadAutoTaskLists = () => {
+    const importantTaskList = TaskList('Important');
+    importantTaskList.setTaskLoader(importantLoader);
+
     const list = [
       TaskList('Today'),
-      TaskList('Important'),
+      importantTaskList,
       TaskList('Tasks')
     ];
 
@@ -97,6 +112,14 @@ const Controller = (() => {
     return isUserTaskList;
   }
 
+  const loadTaskList = (taskList) => {
+    if (isUserTaskList(taskList)) {
+      return taskList;
+    } else {
+
+    }
+  }
+
   // public functions 
   const getUserTaskLists = () => userTaskLists;
   const getSelectedTaskList = () => selectedTaskList;
@@ -130,7 +153,8 @@ const Controller = (() => {
       setSelectedTask,
       getSelectedTaskList,
       getSelectedTask,
-      getUserTaskLists
+      getUserTaskLists,
+      loadTaskList
     };
     SidebarController.initialize(state);
   }

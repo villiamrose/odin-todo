@@ -87,6 +87,7 @@ const MainController = (() => {
       markTaskHandler: markTaskHandler,
       selectTaskHandler: selectTaskHandler
     };
+    taskList.loadTasks();
     Display.showTaskList(taskList, options);
   }
 

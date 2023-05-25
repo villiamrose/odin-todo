@@ -146,6 +146,7 @@ const DetailsDisplay = (() => {
     const deleteContainer = document.createElement('div');
     deleteContainer.className = 'action';
     deleteContainer.append(deleteIcon, deleteLabel);
+    deleteContainer.addEventListener('click', options.deleteHandler);
 
     const actions = document.createElement('div');
     actions.className = 'actions';

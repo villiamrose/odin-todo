@@ -51,7 +51,14 @@ const DetailsController = (() => {
   }
 
   const deleteHandler = (event) => {
-
+    const task = controller.getSelectedTask();
+    const taskListUuid = task.getTaskListUuid();
+    const taskList = controller.getTaskListByUuid(taskListUuid);
+    const selectedTaskList = controller.getSelectedTaskList();
+    taskList.deleteTask(task);
+    selectedTaskList.deleteTask(task);
+    controller.showTaskList(selectedTaskList);
+    hideTaskDetails();
   }
 
   // public functions

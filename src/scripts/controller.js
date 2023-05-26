@@ -13,6 +13,31 @@ const Controller = (() => {
   let userTaskLists = [];
 
   // private functions
+  const isTaskDueToday = (task) => {
+    const dueDate = task.getDueDate();
+    if (dueDate) {
+      const today = new Date();
+      const year = dueDate.getFullYear() === today.getFullYear();
+      const month = dueDate.getMonth() === today.getMonth()
+      const day = dueDate.getDate() === today.getDate();
+      return year && month && day;
+    } else {
+      return false;
+    }
+  }
+
+  const todayLoader = () => {
+    const tasks = [];
+    userTaskLists.forEach(taskList => {
+      taskList.getTasks().forEach(task => {
+        if (isTaskDueToday(task)) {
+          tasks.push(task);
+        }
+      });
+    });
+    return tasks;
+  }
+
   const importantLoader = () => {
     const tasks = [];
     userTaskLists.forEach(taskList => {
@@ -36,6 +61,9 @@ const Controller = (() => {
   }
   
   const loadAutoTaskLists = () => {
+    const todayTaskList = TaskList('Today');
+    todayTaskList.setTaskLoader(todayLoader);
+
     const importantTaskList = TaskList('Important');
     importantTaskList.setTaskLoader(importantLoader);
 
@@ -43,7 +71,7 @@ const Controller = (() => {
     tasksTaskList.setTaskLoader(tasksLoader);
 
     const list = [
-      TaskList('Today'),
+      todayTaskList,
       importantTaskList,
       tasksTaskList
     ];

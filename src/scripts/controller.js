@@ -24,15 +24,28 @@ const Controller = (() => {
     });
     return tasks;
   }
+
+  const tasksLoader = () => {
+    const tasks = [];
+    userTaskLists.forEach(taskList => {
+      taskList.getTasks().forEach(task => {
+        tasks.push(task);
+      });
+    });
+    return tasks;
+  }
   
   const loadAutoTaskLists = () => {
     const importantTaskList = TaskList('Important');
     importantTaskList.setTaskLoader(importantLoader);
 
+    const tasksTaskList = TaskList('Tasks');
+    tasksTaskList.setTaskLoader(tasksLoader);
+
     const list = [
       TaskList('Today'),
       importantTaskList,
-      TaskList('Tasks')
+      tasksTaskList
     ];
 
     autoTaskLists = list;

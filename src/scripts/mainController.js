@@ -1,8 +1,6 @@
-import { TaskList } from "./tasklist.js";
 import { Task } from './task.js';
 import { Display } from "./display.js";
 import { DetailsController } from "./detailsController.js";
-import { SidebarDisplay } from "./sidebarDisplay.js";
 
 export { MainController }
 

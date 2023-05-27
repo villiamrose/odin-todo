@@ -1,5 +1,11 @@
-let date = new Date();
+const arrs = [
+  [],
+  [1, 2, 3],
+  [1, 2]
+];
 
-console.log(date.getFullYear());
-console.log(date.getMonth());
-console.log(date.getDate());
+for (let i = 0; i < arrs.length; i++) {
+  if (arrs[i].length) {
+    console.log('hello');
+  }
+}

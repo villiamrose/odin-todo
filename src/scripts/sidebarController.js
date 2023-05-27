@@ -8,6 +8,13 @@ const SidebarController = (() => {
   // private variables
   let controller = null;
 
+  const selectTaskList = (taskList) => {
+    controller.setSelectedTask(null);
+    controller.setSelectedTaskList(taskList);
+    Display.selectTaskList(taskList);
+    MainController.showTaskList(taskList);
+  }
+
   // public functions 
   const addTaskListHandler = (event) => {
     const taskList = TaskList('');
@@ -29,10 +36,7 @@ const SidebarController = (() => {
     const target = event.currentTarget;    
     const taskList = controller.getTaskListByUuid(target.id);
     
-    controller.setSelectedTask(null);
-    controller.setSelectedTaskList(taskList);
-    Display.selectTaskList(taskList);
-    MainController.showTaskList(taskList);
+    selectTaskList(taskList);
   }
 
   const editTaskListHandler = (event) => {
@@ -57,8 +61,9 @@ const SidebarController = (() => {
   }
 
   const initialize = (state) => {
-    MainController.initialize(state);
     controller = state;
+    MainController.initialize(state);
+    selectTaskList(controller.getSelectedTaskList());
     // MainController.showTaskList(controller.getUserTaskLists()[0]);
   }
 

@@ -133,6 +133,15 @@ const Controller = (() => {
       };
       Display.addTaskList(taskList, options);
     });
+
+    for (let i = 0; i < autoTaskLists.length; i++) {
+      const taskList = autoTaskLists[i];
+      taskList.loadTasks();
+      if (taskList.getTasks().length || autoTaskLists.length === i+1 ) {
+        selectedTaskList = autoTaskLists[i];
+        break;
+      }
+    }
   }
 
   const getTaskListByUuid = (uuid) => {
@@ -160,6 +169,7 @@ const Controller = (() => {
 
     }
   }
+  const getAutoTaskLists = () => autoTaskLists;
 
   // public functions 
   const getUserTaskLists = () => userTaskLists;

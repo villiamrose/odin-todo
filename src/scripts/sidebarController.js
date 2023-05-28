@@ -55,6 +55,8 @@ const SidebarController = (() => {
       const name = target.value ? target.value : 'Untitled list';
       taskList.setName(name);
 
+      controller.saveUserTaskLists();
+
       Display.renameTaskList(taskList);
       MainController.showTaskList(taskList);
     }

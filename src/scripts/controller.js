@@ -81,32 +81,21 @@ const Controller = (() => {
     return list;
   }
 
+  const taskListReviver = (value) => {
+    const taskList = TaskList(value.name);
+    console.log(taskList.getUuid());
+    return taskList;
+  }
+
   const loadUserTaskLists = () => {
-    const list = [
-      TaskList('Checklist'),
-      TaskList('Payments'),
-      TaskList('Reminders')
-    ]
-
-    const doneTask = Task('Task 1');
-    doneTask.setIsDone(true);
-
-    let dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + 1);
-
-    const detailedTask = Task('Task 2');
-    detailedTask.setNotes("Lorem ipsum");
-    detailedTask.setIsImportant(true);
-    detailedTask.setDueDate(dueDate);
-
-
-    list[0].addTask(doneTask);
-    list[0].addTask(detailedTask);
-    list[2].addTask(Task('Task 3'));
-
-    userTaskLists = list;
-
-    return list;
+    const storedValues = localStorage.getItem('userTaskLists');
+    if (storedValues) {
+      const parsedValues = JSON.parse(storedValues);
+      const list = parsedValues.map(value => taskListReviver(value));
+      return list;
+    } else {
+      return [];
+    }
   }
 
   const initializeTaskLists = () => {
@@ -123,7 +112,8 @@ const Controller = (() => {
       Display.addTaskList(taskList, options);
     });
 
-    const userTaskLists = loadUserTaskLists();
+    userTaskLists = loadUserTaskLists();
+
     userTaskLists.forEach(taskList => {
       const options = {
         icon: 'list', 
@@ -169,6 +159,12 @@ const Controller = (() => {
 
     }
   }
+
+  const saveUserTaskLists = () => {
+    const userTaskListsJson = JSON.stringify(userTaskLists);
+    localStorage.setItem('userTaskLists', userTaskListsJson);
+  }
+
   const getAutoTaskLists = () => autoTaskLists;
 
   // public functions 
@@ -205,6 +201,7 @@ const Controller = (() => {
       getSelectedTaskList,
       getSelectedTask,
       getUserTaskLists,
+      saveUserTaskLists,
       loadTaskList
     };
     SidebarController.initialize(state);

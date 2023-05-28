@@ -2,17 +2,15 @@ import {v4 as Uuid} from 'uuid';
 
 const TaskList = (value) => {
   // private variables
-  const uuid = Uuid();
-  const created = new Date();
+  let uuid = Uuid();
+  let created = new Date();
   let tasks = [];
   let name = value;
   let updated = new Date();
   let taskLoader = null;
 
   // private functions
-  const setUpdated = () => {
-    updated = new Date();
-  }
+  
   const isTaskUuidEqual = (task1, task2) => {
     return task1.getUuid() === task2.getUuid();
   }
@@ -62,6 +60,24 @@ const TaskList = (value) => {
       tasks = taskLoader();
     }
   }
+  const setUpdated = (date) => {
+    updated = date ? date : new Date();
+  }
+  const setCreated = (date) => {
+    created = date
+  }
+  const setUuid = (value) => {
+    uuid = value;
+  }
+  const toJSON = () => {
+    return {
+      uuid,
+      created,
+      tasks: tasks.map(task => task.toJSON()),
+      name,
+      updated
+    };
+  }
   return {
     getUuid,
     getName,
@@ -73,7 +89,11 @@ const TaskList = (value) => {
     addTask,
     deleteTask,
     setTaskLoader,
-    loadTasks
+    setCreated,
+    setUpdated,
+    setUuid,
+    loadTasks,
+    toJSON
   }
 }
 

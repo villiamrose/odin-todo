@@ -1,8 +1,8 @@
 import {v4 as Uuid} from 'uuid';
 
 const Task = (value) => {
-  const uuid = Uuid();
-  const created = new Date();
+  let uuid = Uuid();
+  let created = new Date();
   let name = value;
   let updated = new Date();
   let dueDate = null;
@@ -10,11 +10,6 @@ const Task = (value) => {
   let isImportant = false;
   let isDone = false;
   let taskListUuid = null;
- 
-  // private functions
-  const setUpdated = () => {
-    updated = new Date();
-  }
 
   // public functions
   // getters
@@ -63,6 +58,28 @@ const Task = (value) => {
   const setTaskListUuid = (value) => {
     taskListUuid = value;
   }
+  const setUpdated = (date) => {
+    updated = date ? date : new Date();
+  }
+  const setCreated = (date) => {
+    created = date;
+  }
+  const setUuid = (value) => {
+    uuid = value;
+  }
+  const toJSON = () => {
+    return {
+      uuid,
+      created,
+      name,
+      updated,
+      dueDate,
+      notes,
+      isImportant,
+      isDone,
+      taskListUuid
+    }
+  }
 
   return {
     getUuid,
@@ -79,7 +96,11 @@ const Task = (value) => {
     setNotes,
     setIsImportant,
     setDueDate,
-    setTaskListUuid
+    setTaskListUuid,
+    setUpdated,
+    setCreated,
+    setUuid,
+    toJSON
   }
 }
 

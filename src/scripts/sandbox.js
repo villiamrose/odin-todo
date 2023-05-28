@@ -1,11 +1,5 @@
-const arrs = [
-  [],
-  [1, 2, 3],
-  [1, 2]
-];
+localStorage.setItem('test', {a: 'b'});
 
-for (let i = 0; i < arrs.length; i++) {
-  if (arrs[i].length) {
-    console.log('hello');
-  }
-}
+const obj = localStorage.getItem('test');
+
+console.log(obj);

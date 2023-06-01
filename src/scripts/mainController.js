@@ -17,6 +17,7 @@ const MainController = (() => {
       const task = Task(target.value);
       const taskList = controller.getSelectedTaskList();
       taskList.addTask(task);
+      controller.saveUserTaskLists();
       showTaskList(taskList);
     }
   }

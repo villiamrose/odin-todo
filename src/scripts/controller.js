@@ -81,9 +81,22 @@ const Controller = (() => {
     return list;
   }
 
+  const taskReviver = (value) => {
+    const task = Task(value.name);
+    task.setUuid(value.uuid);
+    task.setCreated(new Date(value.created));
+    task.setUpdated(new Date(value.updated));
+    return task;
+  }
+
   const taskListReviver = (value) => {
     const taskList = TaskList(value.name);
-    console.log(taskList.getUuid());
+    taskList.setUuid(value.uuid);
+    taskList.setCreated(new Date(value.created));
+    taskList.setUpdated(new Date(value.updated));
+    value.tasks.forEach(task => {
+      taskList.addTask(taskReviver(task));
+    })
     return taskList;
   }
 

@@ -1,5 +1,7 @@
-localStorage.setItem('test', {a: 'b'});
+const strDate = "2023-05-29T13:41:20.063Z";
 
-const obj = localStorage.getItem('test');
+const date = Date(strDate);
+const now = new Date();
 
-console.log(obj);
+console.log(date); 
+console.log(now); 

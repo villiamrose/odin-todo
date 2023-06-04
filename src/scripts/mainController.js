@@ -39,7 +39,8 @@ const MainController = (() => {
       
       const name = target.value ? target.value : 'Untitled task';
       task.setName(name);
-
+      controller.saveUserTaskLists();
+      
       DetailsController.showTaskDetails(task);
       Display.renameTask(task);
     }
@@ -52,6 +53,7 @@ const MainController = (() => {
     const task = selectedTaskList.getTaskByUuid(taskUuid);
     const isDone = !task.getIsDone();
     task.setIsDone(isDone);
+    controller.saveUserTaskLists();
 
     if (task.getIsDone()) {
       DetailsController.showTaskDetails(task);

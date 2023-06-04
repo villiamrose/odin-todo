@@ -84,8 +84,15 @@ const Controller = (() => {
   const taskReviver = (value) => {
     const task = Task(value.name);
     task.setUuid(value.uuid);
+    task.setTaskListUuid(value.taskListUuid);
+    task.setIsDone(value.isDone);
+    task.setIsImportant(value.isImportant);
+    task.setNotes(value.notes);
     task.setCreated(new Date(value.created));
     task.setUpdated(new Date(value.updated));
+    if (value.dueDate) {
+      task.setDueDate(new Date(value.dueDate));
+    }
     return task;
   }
 

@@ -23,6 +23,7 @@ const DetailsController = (() => {
     const dueDate = parseDate(value);
     const task = controller.getSelectedTask();
     task.setDueDate(dueDate);
+    controller.saveUserTaskLists();
     showTaskDetails(task);
   }
 
@@ -31,6 +32,7 @@ const DetailsController = (() => {
     const value = target.value;
     const task = controller.getSelectedTask();
     task.setNotes(value);
+    controller.saveUserTaskLists();
     showTaskDetails(task);
   }
 
@@ -39,6 +41,7 @@ const DetailsController = (() => {
     const taskList = controller.getSelectedTaskList();
     const isDone = !task.getIsDone();
     task.setIsDone(isDone);
+    controller.saveUserTaskLists();
     controller.showTaskList(taskList);
     showTaskDetails(task);
   }
@@ -47,6 +50,7 @@ const DetailsController = (() => {
     const task = controller.getSelectedTask();
     const isImportant = !task.getIsImportant();
     task.setIsImportant(isImportant);
+    controller.saveUserTaskLists();
     showTaskDetails(task);
   }
 
@@ -57,6 +61,7 @@ const DetailsController = (() => {
     const selectedTaskList = controller.getSelectedTaskList();
     taskList.deleteTask(task);
     selectedTaskList.deleteTask(task);
+    controller.saveUserTaskLists();
     controller.showTaskList(selectedTaskList);
     hideTaskDetails();
   }

@@ -42,6 +42,7 @@ const SidebarDisplay = (() => {
     icon.src = require(`../assets/${options.icon}.svg`);
 
     const name = document.createElement('span');
+    name.className = 'label';
     name.textContent = taskList.getName();
 
     const nameInput = document.createElement('input');
@@ -50,6 +51,11 @@ const SidebarDisplay = (() => {
     nameInput.placeholder = 'Untitled list';
     nameInput.addEventListener('focusout', options.saveTaskListHandler);
     nameInput.addEventListener('keypress', options.saveTaskListHandler);
+
+    const deleteIcon = document.createElement('img');
+    deleteIcon.classList.add('icon', 'lighten');
+    deleteIcon.src = require(`../assets/delete.svg`);
+    deleteIcon.addEventListener('click', options.deleteTaskListHandler);
 
     if(options.showInput) {
       nameInput.style.display = 'span';
@@ -67,7 +73,7 @@ const SidebarDisplay = (() => {
 
     if (!options.readOnly) {
       list.addEventListener('dblclick', options.editTaskListHandler);
-      list.append(nameInput);
+      list.append(nameInput, deleteIcon);
     }
 
     return list;
@@ -108,6 +114,13 @@ const SidebarDisplay = (() => {
     }
   }
 
+  const deleteTaskList = (taskList) => {
+    const taskLists = Array.from(document.querySelectorAll('.navigation .list'));
+    const taskListNode = taskLists.find(item => item.id === taskList.getUuid());
+    console.log('yos');
+    taskListNode.remove();
+  }
+
   const editTaskList = (taskList) => {
     const taskLists = Array.from(document.querySelectorAll('.navigation .list'));
 
@@ -143,6 +156,7 @@ const SidebarDisplay = (() => {
   return {
     buildSidebar,
     addTaskList,
+    deleteTaskList,
     editTaskList,
     renameTaskList,
     selectTaskList,

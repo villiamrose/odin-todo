@@ -78,6 +78,28 @@ li:active {
   width: 100%;
 }
 
+.list .label {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list .icon {
+  z-index: 10;
+}
+
+.lighten {
+  filter: invert(78%) sepia(0%) saturate(0%) hue-rotate(106deg) brightness(103%) contrast(97%);
+}
+
+.lighten:hover {
+  filter: none;
+}
+
+.lighten:active {
+  filter: invert(78%) sepia(0%) saturate(0%) hue-rotate(106deg) brightness(103%) contrast(97%);
+}
+
 .actions {
   margin-top: auto;
 }

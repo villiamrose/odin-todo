@@ -125,9 +125,7 @@ const Controller = (() => {
       const options = {
         icon: icon, 
         readOnly: true,
-        selectTaskListHandler: SidebarController.selectTaskListHandler,
-        editTaskListHandler: SidebarController.editTaskListHandler,
-        saveTaskListHandler: SidebarController.saveTaskListHandler
+        selectTaskListHandler: SidebarController.selectTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -139,7 +137,8 @@ const Controller = (() => {
         icon: 'list', 
         selectTaskListHandler: SidebarController.selectTaskListHandler,
         editTaskListHandler: SidebarController.editTaskListHandler,
-        saveTaskListHandler: SidebarController.saveTaskListHandler
+        saveTaskListHandler: SidebarController.saveTaskListHandler,
+        deleteTaskListHandler: SidebarController.deleteTaskListHandler
       };
       Display.addTaskList(taskList, options);
     });
@@ -157,7 +156,7 @@ const Controller = (() => {
   const getTaskListByUuid = (uuid) => {
     const taskLists = [].concat(autoTaskLists, userTaskLists);
     const taskList = taskLists.find(item => item.getUuid() === uuid);
-    return taskList
+    return taskList;
   }
 
   const isUserTaskList = (taskList) => {
@@ -175,8 +174,6 @@ const Controller = (() => {
   const loadTaskList = (taskList) => {
     if (isUserTaskList(taskList)) {
       return taskList;
-    } else {
-
     }
   }
 
@@ -202,6 +199,26 @@ const Controller = (() => {
 
   const addTaskList = (taskList) => {
     userTaskLists.push(taskList);
+    saveUserTaskLists();
+  }
+
+  const deleteTaskList = (taskList) => {
+    const index = userTaskLists.indexOf(taskList);
+    
+    const isTaskListSelected = selectedTaskList === taskList;
+
+    if (isTaskListSelected && index > 0) {
+      console.log(index - 1);
+      selectedTaskList = userTaskLists[index - 1];
+    } else if (isTaskListSelected && index === 0) {
+      selectedTaskList = autoTaskLists[autoTaskLists.length - 1];
+    }
+
+    if (index > -1) {
+      userTaskLists.splice(index, 1);
+    }
+    
+    saveUserTaskLists();
   }
 
   const initialize = () => {
@@ -216,6 +233,7 @@ const Controller = (() => {
       isUserTaskList,
       getTaskListByUuid,
       addTaskList,
+      deleteTaskList,
       setSelectedTaskList,
       setSelectedTask,
       getSelectedTaskList,

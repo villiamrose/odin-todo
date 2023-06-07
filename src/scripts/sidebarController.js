@@ -26,7 +26,8 @@ const SidebarController = (() => {
       showInput: true, 
       selectTaskListHandler: selectTaskListHandler,
       editTaskListHandler: editTaskListHandler,
-      saveTaskListHandler: saveTaskListHandler
+      saveTaskListHandler: saveTaskListHandler,
+      deleteTaskListHandler: deleteTaskListHandler
     }
     Display.addTaskList(taskList, options);
     
@@ -54,7 +55,7 @@ const SidebarController = (() => {
       const taskList = controller.getTaskListByUuid(taskListUuid);
       const name = target.value ? target.value : 'Untitled list';
       taskList.setName(name);
-
+      
       controller.saveUserTaskLists();
 
       Display.renameTaskList(taskList);
@@ -62,11 +63,24 @@ const SidebarController = (() => {
     }
   }
 
+  const deleteTaskListHandler = (event) => {
+    const target = event.currentTarget;
+    const taskListNode = target.parentNode;
+    const taskListUuid = taskListNode.id;
+    const taskList = controller.getTaskListByUuid(taskListUuid);
+
+    controller.deleteTaskList(taskList);
+    Display.deleteTaskList(taskList);
+    selectTaskList(controller.getSelectedTaskList());
+
+    event.stopPropagation();
+    // Display.deleteTaskList();
+  }
+
   const initialize = (state) => {
     controller = state;
     MainController.initialize(state);
     selectTaskList(controller.getSelectedTaskList());
-    // MainController.showTaskList(controller.getUserTaskLists()[0]);
   }
 
   return {
@@ -74,6 +88,7 @@ const SidebarController = (() => {
     addTaskListHandler,
     selectTaskListHandler,
     editTaskListHandler,
-    saveTaskListHandler
+    saveTaskListHandler,
+    deleteTaskListHandler
   }
 })();

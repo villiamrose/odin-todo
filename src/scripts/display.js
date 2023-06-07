@@ -35,6 +35,7 @@ const Display = (() => {
     unmarkTask: MainDisplay.unmarkTask,
 
     addTaskList: SidebarDisplay.addTaskList,
+    deleteTaskList: SidebarDisplay.deleteTaskList,
     editTaskList: SidebarDisplay.editTaskList,
     renameTaskList: SidebarDisplay.renameTaskList,
     selectTaskList: SidebarDisplay.selectTaskList,
